@@ -1,0 +1,13 @@
+<!-- Hero Section -->
+@if (about()) {
+<section class="relative py-12 overflow-hidden bg-linear-to-r from-blue-600 to-indigo-700">
+  <div class="absolute inset-0 bg-black opacity-50"></div>
+  <div class="relative px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl capitalize">
+        {{ about() }}
+      </h1>
+    </div>
+  </div>
+</section>
+}

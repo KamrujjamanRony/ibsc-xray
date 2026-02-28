@@ -1,0 +1,558 @@
+@if (isView()) {
+  <section class="flex flex-col gap-5">
+    @if (showList()) {
+      <!-- Product List Table -->
+      <div
+        class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default"
+      >
+        <div class="flex justify-between p-4">
+          <div class="w-full">
+            <label for="search" class="sr-only">Search</label>
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none text-gray-600"
+              >
+                <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
+              </div>
+              <input
+                #searchInput
+                autocomplete="off"
+                (input)="onSearch($event)"
+                type="text"
+                id="search"
+                class="block w-full max-w-xl ps-9 pe-3 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand px-3 py-2.5 shadow-xs placeholder:text-body"
+                placeholder="Search by Name, Brand, Model or Origin"
+              />
+            </div>
+          </div>
+          <h1
+            class="text-xl md:text-3xl font-bold text-emerald-500 underline text-center mb-1 w-full"
+          >
+            Product List
+          </h1>
+          @if (isInsert()) {
+            <div class="w-full flex justify-end">
+              <button
+                type="button"
+                (click)="showList.set(false)"
+                class="text-white bg-linear-to-r from-green-400 via-green-500 to-green-600 hover:bg-linear-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5 cursor-pointer"
+              >
+                Add
+              </button>
+            </div>
+          }
+        </div>
+
+        <!-- Loading State -->
+        @if (isLoading()) {
+          <p class="text-3xl font-bold text-center p-10 text-emerald-600">Loading ...</p>
+        }
+
+        <!-- Error State -->
+        @else if (error().message && error().type === 'load') {
+          <p class="text-3xl font-bold text-center p-10 text-red-600">
+            There was an error loading data.
+          </p>
+        }
+
+        <!-- Empty State -->
+        @else if (filteredProductList().length === 0) {
+          <p class="text-3xl font-bold text-center p-10 text-orange-600">No Products found.</p>
+        }
+
+        <!-- Table -->
+        @else {
+          <table class="w-full text-sm text-left rtl:text-right text-body">
+            <thead
+              class="text-sm text-body bg-neutral-secondary-medium border-b border-t border-default-medium"
+            >
+              <tr>
+                <th scope="col" class="px-6 py-3 font-medium">Image</th>
+                <th scope="col" class="px-6 py-3 font-medium">Images</th>
+                <th scope="col" class="px-6 py-3 font-medium">Title</th>
+                <th scope="col" class="px-6 py-3 font-medium">brand</th>
+                <th scope="col" class="px-6 py-3 font-medium">model</th>
+                <th scope="col" class="px-6 py-3 font-medium">origin</th>
+                <th scope="col" class="px-6 py-3 font-medium">catalog</th>
+                @if (isEdit() || isDelete()) {
+                  <th scope="col" class="px-6 py-3 font-medium">Action</th>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of filteredProductList(); track item?.id || $index) {
+                <tr
+                  class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium"
+                >
+                  <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
+                    <img
+                      [src]="imgURL ? imgURL + item.imageUrl : emptyImg"
+                      alt="Product Image"
+                      class="w-16 h-16 object-cover rounded"
+                    />
+                  </th>
+                  <td class="px-6 py-4">
+                    <div class="flex flex-wrap gap-2">
+                      @for (img of item.images || []; track img) {
+                        <img
+                          [src]="imgURL ? imgURL + img : emptyImg"
+                          alt="Product Image"
+                          class="w-16 h-16 object-cover rounded"
+                        />
+                      }
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">{{ item?.title }}</td>
+                  <td class="px-6 py-4">{{ item?.brand || '-' }}</td>
+                  <td class="px-6 py-4">{{ item?.model || '-' }}</td>
+                  <td class="px-6 py-4">{{ item?.origin || '-' }}</td>
+                  <td class="px-6 py-4">
+                    @if (item?.catalogURL) {
+                      <a (click)="downloadCatalog(item)" class="text-blue-600 hover:underline"
+                        >View</a
+                      >
+                    } @else {
+                      -
+                    }
+                  </td>
+                  <td class="px-3 py-4 w-6">
+                    @if (isEdit()) {
+                      <button
+                        class="text-orange-50 bg-orange-400 hover:bg-orange-500 px-1 py-0.5 rounded cursor-pointer mr-1"
+                        (click)="onUpdate(item)"
+                      >
+                        <fa-icon [icon]="faPencil"></fa-icon>
+                      </button>
+                    }
+                    @if (isDelete()) {
+                      <button
+                        class="text-rose-50 bg-rose-600 hover:bg-rose-700 px-1 py-0.5 rounded cursor-pointer"
+                        (click)="onDelete(item?.id)"
+                      >
+                        <fa-icon [icon]="faXmark"></fa-icon>
+                      </button>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+      </div>
+    } @else {
+      @if (isInsert()) {
+        <div class="w-full border border-emerald-200 rounded mb-10">
+          <div class="flex justify-between items-center my-6 px-5">
+            <h2 class="text-2xl font-bold text-emerald-500 transition-all">Product Form</h2>
+            <button
+              class="text-rose-50 bg-rose-600 hover:bg-rose-700 px-1 py-0.5 rounded cursor-pointer"
+              (click)="onToggleList()"
+            >
+              <fa-icon [icon]="faXmark"></fa-icon>
+            </button>
+          </div>
+          <form
+            (submit)="onSubmit($event)"
+            class="min-w-100 mx-auto px-2 lg:px-5 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4"
+            enctype="multipart/form-data"
+          >
+            <!-- Title -->
+            <div>
+              @let title = form.title();
+              @let titleError = form.title().invalid() && form.title().touched();
+              <div class="relative pb-2">
+                <input
+                  type="text"
+                  [formField]="form.title"
+                  autocomplete="off"
+                  id="title"
+                  class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+                  placeholder=" "
+                />
+                <label
+                  for="title"
+                  class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 capitalize"
+                  >Product title</label
+                >
+              </div>
+              @if (titleError) {
+                <ul class="-mt-2 mb-2">
+                  @for (error of title.errors(); track error) {
+                    <li class="text-sm text-red-600">{{ error.message }}</li>
+                  }
+                </ul>
+              }
+            </div>
+            <!-- sl -->
+            <div>
+              @let sl = form.sl(); @let slError = form.sl().invalid() && form.sl().touched();
+              <div class="relative pb-2">
+                <input
+                  type="text"
+                  [formField]="form.sl"
+                  id="sl"
+                  autocomplete="off"
+                  class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+                  placeholder=" "
+                />
+                <label
+                  for="sl"
+                  class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 sl-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 capitalize"
+                  >Product sl</label
+                >
+              </div>
+              @if (slError) {
+                <ul class="-mt-2 mb-2">
+                  @for (error of sl.errors(); track error) {
+                    <li class="text-sm text-red-600">{{ error.message }}</li>
+                  }
+                </ul>
+              }
+            </div>
+            <!-- brand -->
+            <div>
+              @let brand = form.brand();
+              @let brandError = form.brand().invalid() && form.brand().touched();
+              <div class="relative pb-2">
+                <input
+                  type="text"
+                  [formField]="form.brand"
+                  id="brand"
+                  autocomplete="off"
+                  class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+                  placeholder=" "
+                />
+                <label
+                  for="brand"
+                  class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 capitalize"
+                  >Product brand</label
+                >
+              </div>
+              @if (brandError) {
+                <ul class="-mt-2 mb-2">
+                  @for (error of brand.errors(); track error) {
+                    <li class="text-sm text-red-600">{{ error.message }}</li>
+                  }
+                </ul>
+              }
+            </div>
+            <!-- model -->
+            <div>
+              @let model = form.model();
+              @let modelError = form.model().invalid() && form.model().touched();
+              <div class="relative pb-2">
+                <input
+                  type="text"
+                  [formField]="form.model"
+                  id="model"
+                  autocomplete="off"
+                  class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+                  placeholder=" "
+                />
+                <label
+                  for="model"
+                  class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-model peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 capitalize"
+                  >Product model</label
+                >
+              </div>
+              @if (modelError) {
+                <ul class="-mt-2 mb-2">
+                  @for (error of model.errors(); track error) {
+                    <li class="text-sm text-red-600">{{ error.message }}</li>
+                  }
+                </ul>
+              }
+            </div>
+            <!-- origin -->
+            <div>
+              @let origin = form.origin();
+              @let originError = form.origin().invalid() && form.origin().touched();
+              <div class="relative pb-2">
+                <input
+                  type="text"
+                  [formField]="form.origin"
+                  id="origin"
+                  autocomplete="off"
+                  class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+                  placeholder=" "
+                />
+                <label
+                  for="origin"
+                  class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 capitalize"
+                  >Product origin</label
+                >
+              </div>
+              @if (originError) {
+                <ul class="-mt-2 mb-2">
+                  @for (error of origin.errors(); track error) {
+                    <li class="text-sm text-red-600">{{ error.message }}</li>
+                  }
+                </ul>
+              }
+            </div>
+            <!-- item -->
+            <div>
+              @let itemId = form.itemId();
+              @let itemIdError = form.itemId().invalid() && form.itemId().touched();
+              <div class="relative pb-2">
+                <select
+                  [formField]="form.itemId"
+                  id="itemId"
+                  class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+                >
+                  <option value="">Select a item</option>
+                  @for (item of itemOptions(); track item.key) {
+                    <option [value]="item.key">{{ item.value }}</option>
+                  }
+                </select>
+                <label
+                  for="itemId"
+                  class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 capitalize"
+                  >Product item</label
+                >
+              </div>
+              @if (itemIdError) {
+                <ul class="-mt-2 mb-2">
+                  @for (error of itemId.errors(); track error) {
+                    <li class="text-sm text-red-600">{{ error.message }}</li>
+                  }
+                </ul>
+              }
+            </div>
+            <!-- Related Products Multi-Select -->
+            <div class="col-span-1 lg:col-span-2 xl:col-span-3">
+              <div class="relative pb-2">
+                <label
+                  class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 capitalize mt-2"
+                  >Related Products</label
+                >
+                <multi-select
+                  [options]="relatedProductOptions()"
+                  placeholder="Select Related Products"
+                  [(ngModel)]="relatedProducts"
+                  [ngModelOptions]="{ standalone: true }"
+                ></multi-select>
+              </div>
+            </div>
+            <!-- description -->
+            <div>
+              @let description = form.description();
+              @let descriptionError = form.description().invalid() && form.description().touched();
+              <div class="relative pb-2">
+                <textarea
+                  id="description"
+                  [formField]="form.description"
+                  rows="4"
+                  class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+                  placeholder=""
+                ></textarea>
+                <label
+                  for="description"
+                  class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+                  >Product Description</label
+                >
+              </div>
+              @if (descriptionError) {
+                <ul class="-mt-2 mb-2">
+                  @for (error of description.errors(); track error) {
+                    <li class="text-sm text-red-600">{{ error.message }}</li>
+                  }
+                </ul>
+              }
+            </div>
+            <!-- specialFeature -->
+            <div>
+              @let specialFeature = form.specialFeature();
+              @let specialFeatureError =
+                form.specialFeature().invalid() && form.specialFeature().touched();
+              <div class="relative pb-2">
+                <textarea
+                  id="specialFeature"
+                  [formField]="form.specialFeature"
+                  rows="4"
+                  class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+                  placeholder=""
+                ></textarea>
+                <label
+                  for="specialFeature"
+                  class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+                  >Product specialFeature</label
+                >
+              </div>
+              @if (specialFeatureError) {
+                <ul class="-mt-2 mb-2">
+                  @for (error of specialFeature.errors(); track error) {
+                    <li class="text-sm text-red-600">{{ error.message }}</li>
+                  }
+                </ul>
+              }
+            </div>
+            <!-- additionalInformation -->
+            <div>
+              @let additionalInformation = form.additionalInformation();
+              @let additionalInformationError =
+                form.additionalInformation().invalid() && form.additionalInformation().touched();
+              <div class="relative pb-2">
+                <textarea
+                  id="additionalInformation"
+                  [formField]="form.additionalInformation"
+                  rows="4"
+                  class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+                  placeholder=""
+                ></textarea>
+                <label
+                  for="additionalInformation"
+                  class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+                  >Product additionalInformation</label
+                >
+              </div>
+              @if (additionalInformationError) {
+                <ul class="-mt-2 mb-2">
+                  @for (error of additionalInformation.errors(); track error) {
+                    <li class="text-sm text-red-600">{{ error.message }}</li>
+                  }
+                </ul>
+              }
+            </div>
+            <!-- catalogURL -->
+            <div>
+              @let catalogURL = form.catalogURL();
+              @let catalogURLError = form.catalogURL().invalid() && form.catalogURL().touched();
+              <div class="relative pb-2">
+                <input
+                  type="text"
+                  [formField]="form.catalogURL"
+                  id="catalogURL"
+                  autocomplete="off"
+                  class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+                  placeholder=" "
+                />
+                <label
+                  for="catalogURL"
+                  class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 capitalize"
+                  >Product catalogURL</label
+                >
+              </div>
+              @if (catalogURLError) {
+                <ul class="-mt-2 mb-2">
+                  @for (error of catalogURL.errors(); track error) {
+                    <li class="text-sm text-red-600">{{ error.message }}</li>
+                  }
+                </ul>
+              }
+            </div>
+
+            <!-- Image File Upload -->
+            <div class="pb-2">
+              <label class="block text-sm font-medium text-heading" for="imageUrl"
+                >Main Product Image</label
+              >
+
+              <!-- Main Image Preview -->
+              @if (previewUrl()) {
+                <div class="my-1">
+                  <img
+                    [src]="previewUrl()"
+                    alt="Preview"
+                    class="h-32 w-32 object-cover rounded border"
+                  />
+                </div>
+              }
+              <input
+                #fileInput
+                id="imageUrl"
+                type="file"
+                accept="image/*"
+                (change)="onMainImageSelect($event)"
+                class="cursor-pointer bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body"
+              />
+              <p class="mt-1 text-sm text-gray-500" id="file_input_help">
+                SVG, PNG, JPG or WEBP (MAX. 700x700px).
+              </p>
+            </div>
+
+            <!-- Multiple Image File Upload -->
+            <div class="pb-2">
+              <label class="block text-sm font-medium text-heading" for="multipleImageUrl"
+                >Additional Product Images</label
+              >
+
+              <!-- Multiple Images Preview -->
+              @if (multiplePreviewUrls().length > 0) {
+                <div class="my-1 grid grid-cols-4 gap-2">
+                  @for (preview of multiplePreviewUrls(); track preview.url) {
+                    <div class="relative">
+                      <img
+                        [src]="preview.url"
+                        alt="Preview"
+                        class="h-24 w-full object-cover rounded border"
+                      />
+                      <button
+                        type="button"
+                        (click)="removeMultipleImagePreview(preview.index)"
+                        class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs cursor-pointer"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  }
+                </div>
+              }
+              <input
+                #multipleFileInput
+                id="multipleImageUrl"
+                type="file"
+                accept="image/*"
+                (change)="onMultipleImageSelect($event)"
+                multiple
+                class="cursor-pointer bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body"
+              />
+              <p class="mt-1 text-sm text-gray-500" id="file_input_help">
+                SVG, PNG, JPG or WEBP (MAX. 700x700px).
+              </p>
+            </div>
+
+            <!-- Error Message -->
+            @if (error().message && error().type === 'form') {
+              <div
+                class="mt-6 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md flex items-center justify-between relative"
+              >
+                <div class="text-red-600 dark:text-red-400 text-sm text-center">
+                  {{ error().message }}
+                </div>
+                <button
+                  (click)="closeError($event)"
+                  class="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-600 cursor-pointer"
+                >
+                  <fa-icon [icon]="faXmark" class="w-5 h-5"></fa-icon>
+                </button>
+              </div>
+            }
+
+            <div class="flex gap-2 lg:col-span-2 xl:col-span-3">
+              <!-- Save -->
+              <input
+                type="submit"
+                [value]="isSubmitted() ? 'Submitting ...' : selected() ? 'Update' : 'Save'"
+                [disabled]="form().invalid() || isSubmitted()"
+                class="text-gray-50 bg-linear-to-r from-emerald-400 via-emerald-500 to-emerald-600 hover:bg-linear-to-br focus:ring-1 focus:outline-none focus:ring-emerald-300 shadow-lg shadow-emerald-500/50 font-medium rounded text-sm px-5 py-2.5 text-center me-2 mb-2 h-10 w-full disabled:cursor-not-allowed disabled:opacity-50invalid:opacity-50"
+              />
+
+              <button
+                type="button"
+                (click)="onToggleList()"
+                class="text-gray-50 bg-linear-to-r from-red-400 via-red-500 to-red-600 hover:bg-linear-to-br focus:ring-1 focus:outline-none focus:ring-red-300 shadow-lg shadow-red-500/50 font-medium rounded text-sm px-5 py-2.5 text-center me-2 mb-2 h-10"
+              >
+                Close
+              </button>
+            </div>
+          </form>
+        </div>
+      }
+    }
+  </section>
+} @else {
+  <p class="text-3xl font-bold text-center p-10 text-red-600">
+    You don't have permission to view this page.
+  </p>
+}

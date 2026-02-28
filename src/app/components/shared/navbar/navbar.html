@@ -1,0 +1,413 @@
+<nav class="bg-neutral-primary fixed w-full z-20 top-0 start-0 border-b border-default">
+  <div class="max-w-7xl flex flex-wrap items-center justify-between mx-auto px-4 py-1">
+    <!-- Logo -->
+    <a
+      routerLink="/"
+      class="flex items-center space-x-3 rtl:space-x-reverse"
+      (click)="onMenuClick({ submenu: false })"
+    >
+      <img src="favicon.ico" width="80" height="80" class="aspect-auto" alt="Logo" />
+      <span class="self-center text-4xl lg:text-7xl text-blue-700 font-bold whitespace-nowrap">{{
+        companyName
+      }}</span>
+    </a>
+
+    <!-- Right side: Search and Mobile Toggle -->
+    <div class="flex items-center md:order-2">
+      <!-- Mobile search button -->
+      <button
+        type="button"
+        (click)="toggleMobileSearch()"
+        class="flex items-center justify-center md:hidden text-body hover:text-heading bg-transparent box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-2 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm w-10 h-10 focus:outline-none"
+      >
+        <svg
+          class="w-6 h-6"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-width="2"
+            d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+          />
+        </svg>
+        <span class="sr-only">Search</span>
+      </button>
+
+      <!-- Desktop search -->
+      <label for="input-group-1" class="sr-only">Your Products</label>
+      <div class="relative hidden md:block">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <svg
+            class="w-4 h-4 text-body"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-width="2"
+              d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+            />
+          </svg>
+        </div>
+        <input
+          type="text"
+          #searchInput
+          autocomplete="off"
+          (input)="onSearch($event)"
+          (click)="onSearchClick()"
+          class="block w-full ps-9 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand px-2.5 shadow-xs placeholder:text-body"
+          placeholder="Search"
+        />
+
+        <!-- Desktop search results dropdown -->
+        @if (searchResults().length > 0) {
+        <div
+          class="absolute top-full mt-2 w-96 bg-neutral-primary border border-default-medium rounded-lg shadow-xl z-50 animate-fade-in"
+        >
+          <div class="p-4">
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="text-sm font-semibold text-heading">Search Results</h3>
+              <button
+                (click)="onClearSearch()"
+                class="text-xs text-body hover:text-heading"
+                aria-label="Close search results"
+              >
+                Close
+              </button>
+            </div>
+            <div>
+              @for (product of searchResults(); track product.id) {
+              <a
+                [routerLink]="'/product/' + product.id"
+                (click)="onClearSearch(); onMenuClick({ submenu: false })"
+                class="flex items-center gap-2 p-2 hover:bg-neutral-tertiary-medium rounded"
+              >
+                <img
+                  [ngSrc]="ImageApi + product.imageUrl"
+                  [alt]="product.title"
+                  width="64"
+                  height="64"
+                  [ngSrcset]="'64w, 128w, 256w'"
+                  loading="lazy"
+                  class="w-16 h-16 object-cover rounded"
+                />
+                <div>
+                  <h4 class="text-sm font-medium text-heading">{{ product.title }}</h4>
+                  <div class="mt-1 flex justify-between gap-3">
+                    <p class="text-xs text-body">
+                      Brand: <span class="text-gray-800 font-semibold">{{ product.brand }}</span>
+                    </p>
+                    <p class="text-xs text-body">
+                      Model: <span class="text-gray-800 font-semibold">{{ product.model }}</span>
+                    </p>
+                  </div>
+                </div>
+              </a>
+              }
+            </div>
+            <div class="mt-4 pt-4 border-t border-default-medium">
+              <a
+                routerLink="/products"
+                (click)="onClearSearch(); onMenuClick({ submenu: false })"
+                class="w-full flex items-center justify-center gap-2 py-2 px-4 bg-brand/10 text-brand hover:bg-brand/20 rounded-lg transition-colors text-sm font-medium"
+              >
+                View all products
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+
+      <!-- Mobile menu button -->
+      <button
+        (click)="toggleMobileMenu()"
+        type="button"
+        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
+      >
+        <span class="sr-only">Open main menu</span>
+        <svg
+          class="w-6 h-6"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-width="2"
+            d="M5 7h14M5 12h14M5 17h14"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile search and menu (shown on mobile) -->
+    <div [class.hidden]="!isMobileMenuOpen() && !isMobileSearchOpen()" class="w-full md:hidden">
+      <!-- Mobile search input (shown when search is toggled) -->
+      @if (isMobileSearchOpen()) {
+      <div class="mt-3">
+        <div class="relative">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg
+              class="w-4 h-4 text-body"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-width="2"
+                d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+              />
+            </svg>
+          </div>
+          <input
+            type="text"
+            #searchInput
+            autocomplete="off"
+            (input)="onSearch($event)"
+            class="block w-full ps-9 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand px-2.5 shadow-xs placeholder:text-body"
+            placeholder="Search"
+          />
+
+          <!-- Mobile search results -->
+          @if (searchResults().length > 0) {
+          <div
+            class="absolute top-full mt-2 w-full bg-neutral-primary border border-default-medium rounded-lg shadow-xl z-50 animate-fade-in"
+          >
+            <div class="p-4">
+              <div class="flex justify-between items-center mb-3">
+                <h3 class="text-sm font-semibold text-heading">Search Results</h3>
+                <button
+                  (click)="onClearSearch()"
+                  class="text-xs text-body hover:text-heading"
+                  aria-label="Close search results"
+                >
+                  Close
+                </button>
+              </div>
+              <div>
+                @for (product of searchResults(); track product.id) {
+                <a
+                  [routerLink]="'/product/' + product.id"
+                  (click)="onClearSearch(); closeMobileMenu(); closeMobileSearch()"
+                  class="flex items-center gap-2 p-2 hover:bg-neutral-tertiary-medium rounded"
+                >
+                  <img
+                    [ngSrc]="ImageApi + product.imageUrl"
+                    [alt]="product.title"
+                    width="64"
+                    height="64"
+                    [ngSrcset]="'64w, 128w, 256w'"
+                    loading="lazy"
+                    class="w-16 h-16 object-cover rounded"
+                  />
+                  <div>
+                    <h4 class="text-sm font-medium text-heading">{{ product.title }}</h4>
+                    <div class="mt-1 flex justify-between gap-3">
+                      <p class="text-xs text-body">
+                        Brand: <span class="text-gray-800 font-semibold">{{ product.brand }}</span>
+                      </p>
+                      <p class="text-xs text-body">
+                        Model: <span class="text-gray-800 font-semibold">{{ product.model }}</span>
+                      </p>
+                    </div>
+                  </div>
+                </a>
+                }
+              </div>
+              <div class="mt-4 pt-4 border-t border-default-medium">
+                <a
+                  routerLink="/products"
+                  (click)="onClearSearch(); closeMobileMenu(); closeMobileSearch()"
+                  class="w-full flex items-center justify-center gap-2 py-2 px-4 bg-brand/10 text-brand hover:bg-brand/20 rounded-lg transition-colors text-sm font-medium"
+                >
+                  View all products
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+      }
+
+      <!-- Mobile menu items (shown when menu is toggled) -->
+      @if (isMobileMenuOpen()) {
+      <ul
+        class="font-medium flex flex-col p-4 mt-4 border border-default rounded-base bg-neutral-secondary-soft"
+      >
+        @for (menu of menus(); track $index) { @if (menu.submenu && menu.submenu.length > 0) {
+        <!-- Mobile dropdown menu item -->
+        <li class="relative">
+          <button
+            type="button"
+            (click)="toggleMobileSubmenu($index)"
+            class="flex items-center justify-between w-full py-2 px-3 rounded font-medium text-heading hover:bg-neutral-tertiary"
+          >
+            {{ menu.name }}
+            <svg
+              class="w-4 h-4 ms-1.5 transition-transform duration-200"
+              [class.rotate-180]="isMobileSubmenuOpen($index)"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m19 9-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          <!-- Mobile dropdown menu -->
+          <div
+            [class.hidden]="!isMobileSubmenuOpen($index)"
+            class="z-10 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg mt-1 ml-4"
+          >
+            <ul class="p-2 text-sm text-body font-medium">
+              @for (item of menu.submenu; track item.link) {
+              <li>
+                <a
+                  [routerLink]="item.link"
+                  (click)="closeMobileMenu()"
+                  class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                >
+                  {{ item.name }}
+                </a>
+              </li>
+              }
+            </ul>
+          </div>
+        </li>
+        } @else {
+        <!-- Regular mobile menu item -->
+        <li>
+          <a
+            [routerLink]="menu.link"
+            (click)="closeMobileMenu()"
+            class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary"
+            [attr.aria-current]="menu.name.toLowerCase()"
+          >
+            {{ menu.name }}
+          </a>
+        </li>
+        } }
+      </ul>
+      }
+    </div>
+
+    <!-- Desktop Navigation Menu -->
+    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
+      <ul
+        class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary"
+      >
+        @for (menu of menus(); track $index) { @if (menu.submenu && menu.submenu.length > 0) {
+        <!-- Desktop dropdown menu item (using Flowbite) -->
+        <li class="relative">
+          <button
+            [id]="'desktop-dropdownButton' + $index"
+            [attr.data-dropdown-toggle]="'desktop-dropdownNavbar' + $index"
+            class="flex items-center justify-between w-full py-2 px-3 rounded font-medium text-heading md:w-auto hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0"
+          >
+            {{ menu.name }}
+            <svg
+              class="w-4 h-4 ms-1.5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m19 9-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          <!-- Desktop dropdown menu -->
+          <div
+            [id]="'desktop-dropdownNavbar' + $index"
+            class="z-10 hidden absolute bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
+          >
+            <ul
+              class="p-2 text-sm text-body font-medium"
+              [attr.aria-labelledby]="'desktop-dropdownButton' + $index"
+            >
+              @for (item of menu.submenu; track item.link) {
+              <li>
+                <a
+                  [routerLink]="item.link"
+                  (click)="onMenuClick(menu)"
+                  class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                >
+                  {{ item.name }}
+                </a>
+              </li>
+              }
+            </ul>
+          </div>
+        </li>
+        } @else {
+        <!-- Desktop regular menu item -->
+        <li>
+          <a
+            [routerLink]="menu.link"
+            (click)="onMenuClick(menu)"
+            class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0"
+            [attr.aria-current]="menu.name.toLowerCase()"
+          >
+            {{ menu.name }}
+          </a>
+        </li>
+        } }
+      </ul>
+    </div>
+  </div>
+</nav>

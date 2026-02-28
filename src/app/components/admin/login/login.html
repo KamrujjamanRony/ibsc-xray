@@ -1,0 +1,179 @@
+<div
+  class="bg-white dark:bg-gray-900 md:min-h-screen flex items-center justify-center p-4 transition-colors duration-300"
+>
+  <div
+    class="w-full max-w-237.5 bg-white dark:bg-gray-800 [box-shadow:0_2px_10px_-3px_rgba(14,14,14,0.3)] dark:[box-shadow:0_2px_10px_-3px_rgba(0,0,0,0.4)] rounded-2xl overflow-hidden"
+  >
+    <div class="flex items-center max-md:flex-col w-full gap-y-4">
+      <!-- Image Section -->
+      <div class="md:max-w-142.5 w-full h-full">
+        <div
+          class="md:aspect-7/10 bg-gray-50 dark:bg-gray-700 relative before:absolute before:inset-0 before:bg-black/40 dark:before:bg-black/50 overflow-hidden w-full h-full"
+        >
+          <img
+            src="images/loginImage.webp"
+            class="w-full h-full object-cover dark:brightness-90"
+            alt="login img"
+          />
+          <div class="absolute inset-0 flex items-end justify-center">
+            <div
+              class="w-full bg-linear-to-t from-black/50 via-black/50 to-transparent absolute bottom-0 p-6 max-md:hidden"
+            >
+              <h1 class="text-white text-2xl font-semibold">Welcome Back</h1>
+              <p class="text-slate-300 text-[15px] font-medium mt-3 leading-relaxed">
+                Please sign in to your account to continue managing the admin panel.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Section -->
+      <div class="w-full h-full px-8 lg:px-20 py-8 max-md:-order-1">
+        <form class="md:max-w-md w-full mx-auto" (submit)="onSubmit($event)">
+          <div class="mb-12">
+            <h3 class="text-4xl font-bold text-slate-900 dark:text-white">Sign in</h3>
+          </div>
+
+          <!-- username Field -->
+          <div>
+            @let username = form.username(); @let usernameError = form.username().invalid() &&
+            form.username().touched();
+            <div class="relative flex items-center">
+              <input
+                type="text"
+                autocomplete="off"
+                [formField]="form.username"
+                [class.!border-red-500]="usernameError"
+                class="w-full text-sm text-slate-900 dark:text-white border-b border-gray-300 dark:border-gray-600 focus:border-black dark:focus:border-white pr-8 px-2 py-3 outline-none bg-transparent transition-colors duration-200"
+                placeholder="Enter username"
+              />
+              <fa-icon
+                [icon]="faCircleUser"
+                [ngClass]="
+                  usernameError
+                    ? 'text-red-600 dark:text-red-400'
+                    : 'text-gray-500 dark:text-gray-400'
+                "
+                class="w-5 h-5 absolute right-3"
+              ></fa-icon>
+            </div>
+
+            @if (usernameError) {
+            <ul class="mt-1 unordered-list-disc list-inside">
+              @for (error of username.errors(); track error) {
+              <li class="text-sm text-red-600 list-disc">{{ error.message }}</li>
+              }
+            </ul>
+            }
+          </div>
+
+          <!-- Password Field -->
+          <div class="mt-8">
+            @let password = form.password(); @let passwordError = form.password().invalid() &&
+            form.password().touched();
+            <div class="relative flex items-center">
+              <input
+                [formField]="form.password"
+                [class.!border-red-500]="passwordError"
+                [type]="passwordFieldType"
+                autocomplete="off"
+                class="w-full text-sm text-slate-900 dark:text-white border-b border-gray-300 dark:border-gray-600 focus:border-black dark:focus:border-white pr-8 px-2 py-3 outline-none bg-transparent transition-colors duration-200"
+                placeholder="Enter password"
+              />
+              <!-- Eye Icon Button -->
+              <button
+                type="button"
+                (click)="togglePasswordVisibility()"
+                class="absolute right-3 flex items-center transition-colors duration-300"
+              >
+                @if (showPassword()) {
+                <fa-icon
+                  [icon]="faEyeSlash"
+                  class="w-5 h-5 cursor-pointer"
+                  
+                [ngClass]="
+                  passwordError
+                    ? 'text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-600'
+                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                "
+                ></fa-icon>
+                } @else {
+                <fa-icon
+                  [icon]="faEye"
+                  class="w-5 h-5 cursor-pointer"                  
+                [ngClass]="
+                  usernameError
+                    ? 'text-red-600 dark:text-red-400'
+                    : 'text-gray-500 dark:text-gray-400'
+                "
+                ></fa-icon>
+                }
+              </button>
+            </div>
+
+            @if (passwordError) {
+            <ul class="mt-1 unordered-list-disc list-inside">
+              @for (error of password.errors(); track error) {
+              <li class="text-sm text-red-600 list-disc">{{ error.message }}</li>
+              }
+            </ul>
+            }
+          </div>
+
+          <!-- Error Message -->
+          @if (error()) {
+          <div
+            class="mt-6 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md flex items-center justify-between relative"
+          >
+            <div class="text-red-600 dark:text-red-400 text-sm text-center">
+              {{ error() }}
+            </div>
+            <button (click)="closeError($event)" class="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-600 cursor-pointer">
+              <fa-icon [icon]="faXmark" class="w-5 h-5"></fa-icon>
+            </button>
+            
+          </div>
+          }
+
+          <!-- Submit Button -->
+          <div class="mt-12">
+            <button
+              type="submit"
+          [disabled]="isSubmitting()"
+              class="w-full shadow-xl py-2.5 px-4 text-[15px] font-medium tracking-wide rounded-md cursor-pointer text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+            >
+              @if (isSubmitting()) {
+              <span class="flex items-center justify-center">
+                <svg
+                  class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  ></circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Signing in...
+              </span>
+              } @else {
+              <span>Sign in</span>
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

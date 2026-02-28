@@ -1,0 +1,86 @@
+<aside
+  class="group fixed top-0 left-0 z-40 w-12 hover:w-52 h-screen overflow-hidden bg-emerald-900 hover:bg-emerald-950 hover:rounded-br-4xl hover:rounded-tr-4xl transition-all"
+  (mouseenter)="setSidebarHover(true)"
+  (mouseleave)="setSidebarHover(false)"
+  aria-label="Sidebar"
+>
+  <div class="h-full pl-2 py-4 overflow-hidden">
+    <ul class="space-y-2 font-medium">
+      <!-- Logo -->
+      <li class="cursor-pointer">
+        <a routerLink="/" class="px-5 py-2 text-xl font-bold text-gray-50 hover:text-emerald-900 rounded-lg hover:bg-gray-100 hover:text-xl group-hover:text-center hover:uppercase transition-all">
+          <span class="ms-12 group-hover:ms-0 transition-all">SuperSoft</span>
+        </a>
+      </li>
+
+      <!-- Sidebar Menu -->
+      @for (item of sidebarData(); track item?.id) {
+      <li class="cursor-pointer">
+        @if (item?.menu) {
+        <button
+          type="button"
+          class="flex items-center w-full py-2 px-3 -ml-1 text-gray-50 hover:text-emerald-900 duration-75 rounded-lg hover:bg-gray-100 hover:text-xl hover:uppercase transition-all"
+          [attr.aria-controls]="item.label"
+          [attr.data-accordion-target]="'#' + item?.label"
+          aria-expanded="menuState()[item.id]"
+          (click)="toggleMenu(item.id)"
+        >
+          <fa-icon [icon]="item.icon"></fa-icon>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
+            {{ item.label }}
+          </span>
+          @if (menuState()[item.id]) {}
+          <fa-icon [icon]="menuState()[item.id] ? faCaretDown : faCaretUp"></fa-icon>
+        </button>
+
+        <!-- Submenu -->
+        <ul
+          [id]="item?.label"
+          [attr.aria-labelledby]="item?.label"
+          [class.hidden]="!menuState()[item.id] || !sidebarHovered()"
+          class="w-[97%] mx-auto bg-emerald-600 rounded-lg"
+        >
+          @for (subItem of item.menu; track subItem?.route) {
+          <li class="cursor-pointer">
+            <a
+          [routerLink]="subItem?.route"
+          type="button"
+          class="flex items-center w-full p-2 text-base text-gray-50 hover:text-emerald-900 duration-75 rounded-lg hover:bg-gray-100 transition-all hover:text-xl hover:uppercase"
+        >
+          <fa-icon [icon]="subItem.icon"></fa-icon>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">{{
+            subItem.label
+          }}</span>
+        </a>
+          </li>
+          }
+        </ul>
+        } @else {
+        <!-- Single Link -->
+        <a
+          [routerLink]="item?.route"
+          type="button"
+          class="flex items-center w-full p-2 text-base text-gray-50 hover:text-emerald-900 duration-75 rounded-lg hover:bg-gray-100 transition-all hover:text-xl hover:uppercase"
+        >
+          <fa-icon [icon]="item.icon"></fa-icon>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">{{
+            item.label
+          }}</span>
+        </a>
+        }
+      </li>
+      }
+      <li class="cursor-pointer">
+        <!-- Single Link -->
+        <a
+          (click)="auth.deleteUser()"
+          type="button"
+          class="flex items-center w-full p-2 text-base text-gray-50 hover:text-rose-600 duration-75 rounded-lg hover:bg-gray-100 transition-all hover:text-xl hover:uppercase"
+        >
+          <fa-icon [icon]="faRightFromBracket"></fa-icon>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Log Out</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>

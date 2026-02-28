@@ -1,0 +1,11 @@
+<!-- Hero Section -->
+<app-page-title [about]="title() || 'All Products'" />
+<div>
+  <div class="py-4 mx-auto lg:max-w-6xl md:max-w-4xl max-w-xl">
+    <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-6 gap-4 px-2 md:px-5 lg:px-7">
+      @for (product of products(); track $index) {
+      <app-product-card [product]="product" />
+      }
+    </div>
+  </div>
+</div>

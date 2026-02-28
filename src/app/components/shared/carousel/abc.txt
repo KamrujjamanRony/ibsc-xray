@@ -1,0 +1,2268 @@
+USE [SuperPathDb]
+GO
+/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[__EFMigrationsHistory](
+	[MigrationId] [nvarchar](150) NOT NULL,
+	[ProductVersion] [nvarchar](32) NOT NULL,
+ CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY CLUSTERED 
+(
+	[MigrationId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[A_HeaderView]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[A_HeaderView](
+	[InvNo] [nvarchar](50) NOT NULL,
+	[InvDate] [date] NOT NULL,
+	[PtName] [nvarchar](2500) NOT NULL,
+	[Age] [nvarchar](50) NOT NULL,
+	[Sex] [nvarchar](50) NOT NULL,
+	[DrName] [nvarchar](500) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[A_Imaging_Report_X_Ray_Ultra]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[A_Imaging_Report_X_Ray_Ultra](
+	[InvNo] [nvarchar](50) NOT NULL,
+	[InvDate] [date] NOT NULL,
+	[Name] [nvarchar](550) NULL,
+	[Sex] [nvarchar](50) NULL,
+	[Age] [nvarchar](50) NULL,
+	[DrName] [nvarchar](500) NULL,
+	[TestName] [nvarchar](500) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[A_tb_IN_BILL_TMP]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[A_tb_IN_BILL_TMP](
+	[BillNo] [nvarchar](50) NULL,
+	[BillDate] [datetime] NOT NULL,
+	[BillTime] [nvarchar](50) NULL,
+	[AdmId] [int] NOT NULL,
+	[RegId] [int] NOT NULL,
+	[BedId] [int] NOT NULL,
+	[TotalAmt] [float] NOT NULL,
+	[TotalDiscount] [float] NOT NULL,
+	[AdvanceAmt] [float] NOT NULL,
+	[PaidAmt] [float] NOT NULL,
+	[Remarks] [nvarchar](500) NULL,
+	[PostedBy] [nvarchar](50) NULL,
+	[TestId] [int] NOT NULL,
+	[TestName] [nvarchar](500) NULL,
+	[Charge] [float] NOT NULL,
+	[Unit] [int] NOT NULL,
+	[TotCharge] [float] NOT NULL,
+	[LessAmt] [float] NOT NULL,
+	[ExtraLess] [float] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[acc_Bank]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[acc_Bank](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](max) NOT NULL,
+	[Address] [nvarchar](max) NULL,
+	[Remarks] [nvarchar](max) NULL,
+ CONSTRAINT [PK_acc_Bank] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[acc_ChartofAccount]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[acc_ChartofAccount](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ControlHeadId] [int] NULL,
+	[AccountCode] [nvarchar](max) NOT NULL,
+	[AccountGroup] [nvarchar](max) NOT NULL,
+	[SubHead] [nvarchar](max) NOT NULL,
+	[COAMap] [nvarchar](max) NULL,
+	[BankId] [int] NULL,
+	[AccountNo] [nvarchar](max) NULL,
+	[OpeningBalance] [decimal](18, 2) NULL,
+	[Remarks] [nvarchar](max) NULL,
+ CONSTRAINT [PK_acc_ChartofAccount] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[acc_Department]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[acc_Department](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_acc_Department] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[acc_SubDepartment]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[acc_SubDepartment](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[DepartmentId] [int] NOT NULL,
+	[Name] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_acc_SubDepartment] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[acc_Vendor]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[acc_Vendor](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](max) NOT NULL,
+	[Address] [nvarchar](max) NULL,
+	[Mobile] [nvarchar](max) NULL,
+	[Remarks] [nvarchar](max) NULL,
+ CONSTRAINT [PK_acc_Vendor] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[acc_Voucher]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[acc_Voucher](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TransactionType] [nvarchar](max) NOT NULL,
+	[COAMap] [nvarchar](max) NULL,
+	[VoucherDate] [datetime2](7) NOT NULL,
+	[VoucherNo] [nvarchar](max) NULL,
+	[AccountBankCashId] [int] NULL,
+	[VendorId] [int] NULL,
+	[ReceiveFrom] [nvarchar](max) NULL,
+	[PayTo] [nvarchar](max) NULL,
+	[Amount] [decimal](18, 2) NULL,
+	[Particular] [nvarchar](max) NULL,
+	[Remarks] [nvarchar](max) NULL,
+ CONSTRAINT [PK_acc_Voucher] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[acc_VoucherDetail]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[acc_VoucherDetail](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[VoucherId] [int] NOT NULL,
+	[HeadId] [int] NULL,
+	[SubHeadId] [int] NULL,
+	[DebitAmount] [decimal](18, 2) NULL,
+	[CreditAmount] [decimal](18, 2) NULL,
+	[Remarks] [nvarchar](max) NULL,
+ CONSTRAINT [PK_acc_VoucherDetail] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[DatabaseTest]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[DatabaseTest](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Content] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_DatabaseTest] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[DEL_RECORD_OF_BILL_DELETE]    Script Date: 31/12/2025 13:28:59 ******/
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[DEL_RECORD_OF_BILL_DELETE](
+	[BillNo] [varchar](100) NOT NULL,
+	[BillDate] [date] NOT NULL,
+	[BillTime] [nvarchar](50) NOT NULL,
+	[RegId] [int] NOT NULL,
+	[PatientName] [nvarchar](250) NOT NULL,
+	[MobileNo] [nvarchar](15) NULL,
+	[Address] [nvarchar](500) NULL,
+	[Age] [nvarchar](50) NOT NULL,
+	[Sex] [nvarchar](50) NOT NULL,
+	[RefDrId] [int] NOT NULL,
+	[UnderDrId] [int] NOT NULL,
+	[TotalAmt] [money] NOT NULL,
+	[LessAmt] [money] NOT NULL,
+	[LessFrom] [nvarchar](50) NOT NULL,
+	[CollAmt] [money] NOT NULL,
+	[Remarks] [nvarchar](500) NULL,
+	[PostedBy] [nvarchar](100) NULL,
+	[ModuleName] [nvarchar](100) NULL,
+	[AuthorizedDateTime] [nvarchar](150) NULL,
+	[AuthorizedBy] [nvarchar](150) NULL,
+	[Status] [nvarchar](150) NULL,
+	[MasterId] [int] NOT NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[PcName] [nvarchar](500) NOT NULL,
+	[IpAddress] [nvarchar](500) NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[EDIT_RECORD_OF_BILL]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[EDIT_RECORD_OF_BILL](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TrNo] [nvarchar](50) NOT NULL,
+	[TrDate] [date] NOT NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[PatientName] [nvarchar](250) NOT NULL,
+	[PrevAmt] [float] NOT NULL,
+	[CurrAmt] [float] NOT NULL,
+	[PrevTestNo] [int] NOT NULL,
+	[CurrTestNo] [int] NOT NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[PrevRefDrId] [int] NOT NULL,
+	[CurrRefDrId] [int] NOT NULL,
+	[ModuleName] [nvarchar](50) NOT NULL,
+	[PcName] [nvarchar](500) NOT NULL,
+	[IpAddress] [nvarchar](500) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[LeaveApplicationDtos]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[LeaveApplicationDtos](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[EmployeeId] [uniqueidentifier] NULL,
+	[EmployeeName] [nvarchar](max) NULL,
+	[Dep] [nvarchar](max) NULL,
+	[LeaveCategory] [nvarchar](max) NULL,
+	[DateFrom] [datetime2](7) NULL,
+	[DateTo] [datetime2](7) NULL,
+	[InformedTo] [uniqueidentifier] NULL,
+	[InformedToEmployeeName] [nvarchar](max) NULL,
+	[InformedToDep] [nvarchar](max) NULL,
+	[Reason] [nvarchar](max) NULL,
+	[Status] [nvarchar](max) NULL,
+	[RecommendationBy] [uniqueidentifier] NULL,
+	[RecommendationBEmployeeName] [nvarchar](max) NULL,
+	[RecommendationBDep] [nvarchar](max) NULL,
+	[ApproverId] [uniqueidentifier] NULL,
+	[ApproverEmployeeName] [nvarchar](max) NULL,
+	[ApproverDep] [nvarchar](max) NULL,
+ CONSTRAINT [PK_LeaveApplicationDtos] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[MainProject]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[MainProject](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ac_DEPARTMENT]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_ac_DEPARTMENT](
+	[Id] [int] NOT NULL,
+	[Name] [nvarchar](250) NOT NULL,
+	[Type] [nvarchar](100) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ac_EXPENSE]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_ac_EXPENSE](
+	[Id] [int] NOT NULL,
+	[SubDeptId] [int] NOT NULL,
+	[Name] [nvarchar](500) NOT NULL,
+	[Code] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ac_EXPENSE_ENTRY]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_ac_EXPENSE_ENTRY](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TrDate] [date] NOT NULL,
+	[TrNo] [nvarchar](50) NOT NULL,
+	[Code] [nvarchar](50) NOT NULL,
+	[Description] [nvarchar](500) NOT NULL,
+	[Amount] [float] NOT NULL,
+	[Remarks] [nvarchar](1500) NOT NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[PcName] [nvarchar](500) NOT NULL,
+	[IpAddress] [nvarchar](50) NOT NULL,
+	[EntryDate] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ac_HEAD]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_ac_HEAD](
+	[Id] [int] NOT NULL,
+	[DeptId] [int] NOT NULL,
+	[SubDeptId] [int] NOT NULL,
+	[Name] [nvarchar](500) NOT NULL,
+	[Code] [nvarchar](50) NOT NULL,
+	[Type] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ac_INCOME_ENTRY]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_ac_INCOME_ENTRY](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TrDate] [date] NOT NULL,
+	[TrNo] [nvarchar](50) NOT NULL,
+	[Code] [nvarchar](50) NOT NULL,
+	[Description] [nvarchar](500) NOT NULL,
+	[Amount] [float] NOT NULL,
+	[Remarks] [nvarchar](1500) NOT NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[PcName] [nvarchar](500) NOT NULL,
+	[IpAddress] [nvarchar](50) NOT NULL,
+	[EntryDate] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ac_SUB_DEPARTMENT]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_ac_SUB_DEPARTMENT](
+	[Id] [int] NOT NULL,
+	[DeptId] [int] NOT NULL,
+	[Name] [nvarchar](500) NOT NULL,
+	[Type] [nvarchar](100) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_app_APPOINTMENT]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_app_APPOINTMENT](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TrDate] [date] NOT NULL,
+	[SerialNo] [int] NOT NULL,
+	[DrId] [int] NOT NULL,
+	[AppDate] [date] NOT NULL,
+	[RegId] [int] NOT NULL,
+	[PatientName] [nvarchar](max) NOT NULL,
+	[MobileNo] [nvarchar](50) NOT NULL,
+	[Age] [nvarchar](500) NOT NULL,
+	[Sex] [nvarchar](50) NOT NULL,
+	[Address] [nvarchar](max) NOT NULL,
+	[PatientType] [nvarchar](50) NOT NULL,
+	[PostedBy] [nvarchar](500) NOT NULL,
+	[PcName] [nvarchar](500) NOT NULL,
+	[IpAddress] [nvarchar](50) NOT NULL,
+	[EntryDateTime] [datetime] NOT NULL,
+	[Remarks] [nvarchar](1500) NOT NULL,
+	[PaidAmt] [float] NOT NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_app_DOCTOR_LEAVE]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_app_DOCTOR_LEAVE](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[DrId] [int] NOT NULL,
+	[LeaveDate] [date] NOT NULL,
+	[PostedBy] [nvarchar](500) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_app_DOCTOR_SETUP]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_app_DOCTOR_SETUP](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[DrId] [int] NOT NULL,
+	[NewPatientPerDay] [int] NOT NULL,
+	[OldPatientPerDay] [int] NOT NULL,
+	[BlockedSerialNo] [nvarchar](1500) NOT NULL,
+	[SendSmsToPatient] [int] NOT NULL,
+	[LastUpdateDetails] [nvarchar](max) NOT NULL,
+	[PostedBy] [nvarchar](500) NOT NULL,
+	[IpAddress] [nvarchar](500) NOT NULL,
+	[PcName] [nvarchar](500) NOT NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_BILL_DETAIL]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_BILL_DETAIL](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[BillNo] [nvarchar](15) NOT NULL,
+	[TestId] [int] NOT NULL,
+	[Charge] [money] NOT NULL,
+	[Quantity] [int] NOT NULL,
+	[ActualCharge] [money] NOT NULL,
+	[HnrAmt] [money] NOT NULL,
+	[DrLess] [money] NOT NULL,
+	[TotHnrAmt] [money] NOT NULL,
+	[PrintStatus] [int] NOT NULL,
+	[Valid] [int] NOT NULL,
+	[SampleNo] [nvarchar](50) NOT NULL,
+	[GridRemarks] [nvarchar](500) NOT NULL,
+	[BillTimeLess] [float] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_BILL_LEDGER]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_BILL_LEDGER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TrNo] [nvarchar](50) NOT NULL,
+	[TrDate] [smalldatetime] NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[SalesAmt] [float] NOT NULL,
+	[LessAmt] [float] NOT NULL,
+	[RtnAmt] [float] NOT NULL,
+	[CollAmt] [float] NOT NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[DeptId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_BILL_MASTER]    Script Date: 31/12/2025 13:28:59 ******/
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[tb_BILL_MASTER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[BillNo] [varchar](100) NOT NULL,
+	[BillDate] [date] NOT NULL,
+	[BillTime] [nvarchar](50) NOT NULL,
+	[RegId] [int] NOT NULL,
+	[PatientName] [nvarchar](250) NOT NULL,
+	[MobileNo] [nvarchar](15) NULL,
+	[Address] [nvarchar](500) NULL,
+	[Age] [nvarchar](50) NOT NULL,
+	[Sex] [nvarchar](50) NOT NULL,
+	[RefDrId] [int] NOT NULL,
+	[UnderDrId] [int] NOT NULL,
+	[TotalAmt] [money] NOT NULL,
+	[LessAmt] [money] NOT NULL,
+	[LessFrom] [nvarchar](50) NOT NULL,
+	[CollAmt] [money] NOT NULL,
+	[LessPc] [money] NOT NULL,
+	[LessType] [nvarchar](50) NULL,
+	[Remarks] [nvarchar](500) NULL,
+	[IsShow] [int] NOT NULL,
+	[IsTransfer] [int] NOT NULL,
+	[PostedBy] [nvarchar](500) NOT NULL,
+	[DeliveryDate] [date] NOT NULL,
+	[DeliveryNumber] [nvarchar](50) NOT NULL,
+	[DeliveryTimeAmPm] [nvarchar](50) NOT NULL,
+	[LastPrintPc] [nvarchar](150) NOT NULL,
+	[PcName] [nvarchar](500) NOT NULL,
+	[IpAddress] [nvarchar](500) NOT NULL,
+	[AdmId] [int] NOT NULL,
+	[DeptId] [int] NOT NULL,
+	[ComGivenPc] [varchar](50) NULL,
+	[ComGivePcType] [varchar](50) NULL,
+	[ComGivenAmount] [varchar](50) NULL,
+	[IsPaidHnr] [int] NOT NULL,
+	[LastChangeUser] [nvarchar](100) NULL,
+	[PaidDate] [date] NULL,
+ CONSTRAINT [PK_InvMaster] PRIMARY KEY CLUSTERED 
+(
+	[BillNo] ASC,
+	[BillDate] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[tb_BILL_RETURN]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_BILL_RETURN](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TrNo] [nvarchar](50) NOT NULL,
+	[TrDate] [date] NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[InvoiceValue] [float] NOT NULL,
+	[TotalReturn] [float] NOT NULL,
+	[ItemId] [int] NOT NULL,
+	[Charge] [float] NOT NULL,
+	[LessAmt] [float] NOT NULL,
+	[RtnAmt] [float] NOT NULL,
+	[PostedBy] [nvarchar](500) NOT NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[PcName] [nvarchar](50) NOT NULL,
+	[IpAddress] [nvarchar](50) NOT NULL,
+	[CashRtn] [float] NOT NULL,
+	[DueAdjust] [float] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_DEFAULT_DELIVERY_DATETIME]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_DEFAULT_DELIVERY_DATETIME](
+	[Date] [date] NOT NULL,
+	[TimeNumber] [nvarchar](50) NOT NULL,
+	[TimeAmPm] [nvarchar](50) NOT NULL,
+	[HostName] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_DIFF_COUNT_PARAM]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_DIFF_COUNT_PARAM](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Param] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_DigitalVd]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_DigitalVd](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[BillNo] [nvarchar](50) NOT NULL,
+	[BillDate] [date] NOT NULL,
+	[DeptName] [nvarchar](50) NOT NULL,
+	[Price] [float] NOT NULL,
+	[Less] [float] NOT NULL,
+	[RefAmt] [float] NOT NULL,
+	[RefId] [int] NOT NULL,
+	[DrOneAmt] [float] NOT NULL,
+	[DrOneId] [int] NOT NULL,
+	[DrTwoAmt] [float] NOT NULL,
+	[DrTwoId] [int] NOT NULL,
+	[DrThreeAmt] [float] NOT NULL,
+	[DrThreeName] [nvarchar](500) NULL,
+	[Balance] [float] NOT NULL,
+	[Paid] [float] NOT NULL,
+	[Remarks] [nvarchar](500) NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[PcName] [nvarchar](50) NOT NULL,
+	[IpAddress] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_DOCTOR]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_DOCTOR](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](max) NULL,
+	[Address] [nvarchar](max) NULL,
+	[ContactNo] [nvarchar](max) NULL,
+	[TakeCom] [int] NULL,
+	[UserName] [nvarchar](max) NULL,
+	[Valid] [int] NULL,
+	[EntryDate] [datetime2](7) NULL,
+	[ReportUserName] [nvarchar](max) NULL,
+	[MpoId] [int] NULL,
+	[IsChamberDoctor] [int] NULL,
+	[DrFee] [int] NULL,
+	[Code] [int] NOT NULL,
+ CONSTRAINT [PK_tb_DOCTOR] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_DOCTOR_LEDGER]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_DOCTOR_LEDGER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[DrId] [int] NOT NULL,
+	[TestId] [int] NOT NULL,
+	[Charge] [money] NOT NULL,
+	[HnrAmt] [money] NOT NULL,
+	[LessAmt] [money] NOT NULL,
+	[PaidAmt] [money] NOT NULL,
+	[MODULENAME] [nvarchar](50) NULL,
+	[DueCollLess] [float] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Tb_DoctorFee]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[Tb_DoctorFee](
+	[Gid] [uniqueidentifier] NOT NULL,
+	[PatientRegId] [int] NOT NULL,
+	[DoctorId] [int] NOT NULL,
+	[PatientType] [nvarchar](max) NULL,
+	[SL] [int] NULL,
+	[Amount] [int] NULL,
+	[Discount] [int] NULL,
+	[NextFlowDate] [datetime2](7) NULL,
+	[Remarks] [nvarchar](max) NULL,
+	[PostBy] [nvarchar](max) NULL,
+	[EntryDate] [datetime2](7) NULL,
+ CONSTRAINT [PK_Tb_DoctorFee] PRIMARY KEY CLUSTERED 
+(
+	[Gid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_DrWiseHonorium]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_DrWiseHonorium](
+	[DrId] [int] NOT NULL,
+	[SubProjectId] [int] NOT NULL,
+	[HonouriamAmt] [money] NOT NULL,
+	[Type] [nvarchar](50) NOT NULL,
+	[UserName] [nvarchar](50) NOT NULL,
+	[EntryDate] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_DUE_COLL]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_DUE_COLL](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TrNo] [nvarchar](15) NOT NULL,
+	[TrDate] [smalldatetime] NOT NULL,
+	[TrTime] [nvarchar](50) NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[TotalAmt] [float] NOT NULL,
+	[LessAmt] [float] NOT NULL,
+	[LessFrom] [nvarchar](50) NOT NULL,
+	[LessPc] [float] NOT NULL,
+	[LessType] [nvarchar](50) NULL,
+	[Remarks] [nvarchar](1000) NULL,
+	[PostedBy] [nvarchar](100) NOT NULL,
+	[IsShow] [int] NOT NULL,
+	[PcName] [nvarchar](500) NOT NULL,
+	[IpAddress] [nvarchar](500) NOT NULL,
+	[AdmId] [int] NOT NULL,
+	[DeptId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Tb_Employee]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[Tb_Employee](
+	[EId] [uniqueidentifier] NOT NULL,
+	[EName] [nvarchar](max) NOT NULL,
+	[Gender] [nvarchar](max) NULL,
+	[Religion] [nvarchar](max) NULL,
+	[DOB] [datetime2](7) NULL,
+	[Addr] [nvarchar](max) NULL,
+	[NID] [nvarchar](max) NULL,
+	[MoNum] [nvarchar](max) NULL,
+	[EmCont] [nvarchar](max) NULL,
+	[ReEmCon] [nvarchar](max) NULL,
+	[Email] [nvarchar](max) NULL,
+	[Pic] [nvarchar](max) NULL,
+	[EduQua] [nvarchar](max) NULL,
+	[Expe] [nvarchar](max) NULL,
+	[Skill] [nvarchar](max) NULL,
+	[Ref] [nvarchar](max) NULL,
+	[Dep] [nvarchar](max) NULL,
+	[OfficeEId] [nvarchar](max) NULL,
+	[Design] [nvarchar](max) NULL,
+	[JDate] [datetime2](7) NULL,
+	[Type] [nvarchar](max) NULL,
+	[Act] [bit] NULL,
+	[LeaveInfo] [nvarchar](max) NULL,
+	[WorkingPlace] [nvarchar](max) NULL,
+	[BasicSalary] [decimal](18, 2) NULL,
+	[HouseRent] [decimal](18, 2) NULL,
+	[MediAllow] [decimal](18, 2) NULL,
+	[Convey] [decimal](18, 2) NULL,
+	[OtherAllow] [decimal](18, 2) NULL,
+	[Others] [decimal](18, 2) NULL,
+	[TotalSalary] [decimal](18, 2) NULL,
+	[FileLink] [nvarchar](max) NULL,
+	[Others1] [nvarchar](max) NULL,
+	[Others2] [nvarchar](max) NULL,
+	[Others3] [nvarchar](max) NULL,
+	[Remarks] [nvarchar](max) NULL,
+	[PostBy] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_Tb_Employee] PRIMARY KEY CLUSTERED 
+(
+	[EId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_Expense]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_Expense](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ExpenseName] [nvarchar](500) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_Expense_Patient]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_Expense_Patient](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TrNo] [nvarchar](50) NOT NULL,
+	[TrDate] [date] NOT NULL,
+	[IndoorId] [int] NOT NULL,
+	[ExpenseId] [int] NOT NULL,
+	[Amount] [decimal](18, 0) NOT NULL,
+	[Remarks] [nvarchar](500) NULL,
+	[UserName] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_FINANCIAL_COLLECTION]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_FINANCIAL_COLLECTION](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[FinancialId] [int] NOT NULL,
+	[Amount] [float] NOT NULL,
+	[ModuleName] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_FINANCIAL_SERVICE]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_FINANCIAL_SERVICE](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](150) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_in_ADMISSION]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_in_ADMISSION](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[DeptId] [int] NOT NULL,
+	[RegId] [int] NOT NULL,
+	[AdmNo] [nvarchar](50) NOT NULL,
+	[AdmDate] [date] NOT NULL,
+	[AdmTime] [nvarchar](50) NOT NULL,
+	[PtName] [nvarchar](2500) NOT NULL,
+	[ContactNo] [nvarchar](50) NOT NULL,
+	[PtSex] [nvarchar](50) NOT NULL,
+	[PtAge] [nvarchar](500) NOT NULL,
+	[PtAddress] [nvarchar](2550) NOT NULL,
+	[SpouseName] [nvarchar](2550) NOT NULL,
+	[EmgrContact] [nvarchar](50) NOT NULL,
+	[ChiefComplain] [nvarchar](2550) NOT NULL,
+	[RefId] [int] NOT NULL,
+	[UnderDrId] [int] NOT NULL,
+	[BedId] [int] NOT NULL,
+	[AdmCharge] [float] NOT NULL,
+	[ReleaseStatus] [int] NOT NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[PcName] [nvarchar](50) NOT NULL,
+	[IpAddress] [nvarchar](50) NOT NULL,
+	[TrNo] [nvarchar](50) NULL,
+	[FatherName] [nvarchar](200) NOT NULL,
+	[MotherName] [nvarchar](200) NOT NULL,
+	[Remarks] [nvarchar](1500) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_in_ADVANCE_COLLECTION]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_in_ADVANCE_COLLECTION](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TrNo] [nvarchar](50) NOT NULL,
+	[TrDate] [date] NOT NULL,
+	[RegId] [int] NOT NULL,
+	[AdmId] [int] NOT NULL,
+	[BedId] [int] NOT NULL,
+	[Amount] [float] NOT NULL,
+	[PostedBy] [nvarchar](500) NOT NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[PcName] [nvarchar](50) NOT NULL,
+	[IpAddress] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_in_BED]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_in_BED](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](500) NOT NULL,
+	[Floor] [nvarchar](500) NULL,
+	[BedType] [nvarchar](500) NULL,
+	[Charge] [float] NOT NULL,
+	[SrvCharge] [float] NOT NULL,
+	[BookStatus] [int] NOT NULL,
+	[DeptId] [int] NOT NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[EntryDate] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_in_BED_TYPE]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_in_BED_TYPE](
+	[Name] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_in_BILL_DETAIL]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_in_BILL_DETAIL](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[BillNo] [nvarchar](50) NOT NULL,
+	[TestId] [int] NOT NULL,
+	[TestName] [nvarchar](1500) NOT NULL,
+	[Charge] [float] NOT NULL,
+	[Unit] [float] NOT NULL,
+	[TotCharge] [float] NOT NULL,
+	[LessAmt] [float] NOT NULL,
+	[ExtraLess] [float] NOT NULL,
+	[DrAmt] [float] NOT NULL,
+	[DrId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_IN_BILL_MASTER]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_IN_BILL_MASTER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[BillNo] [nvarchar](50) NOT NULL,
+	[BillDate] [date] NOT NULL,
+	[BillTime] [nvarchar](50) NOT NULL,
+	[AdmId] [int] NOT NULL,
+	[RegId] [int] NOT NULL,
+	[BedId] [int] NOT NULL,
+	[TotalAmt] [float] NOT NULL,
+	[TotalDiscount] [float] NOT NULL,
+	[AdvanceAmt] [float] NOT NULL,
+	[PaidAmt] [float] NOT NULL,
+	[Remarks] [nvarchar](1550) NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[PcName] [nvarchar](50) NOT NULL,
+	[IpAddress] [nvarchar](50) NOT NULL,
+	[Entrydate] [datetime] NOT NULL,
+	[Status] [nvarchar](500) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_in_DEPARTMENT]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_in_DEPARTMENT](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](500) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_in_DISCHARGE_CERTIFICATE]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_in_DISCHARGE_CERTIFICATE](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TrNo] [nvarchar](50) NULL,
+	[TrDate] [date] NULL,
+	[AdmId] [int] NOT NULL,
+	[Diagnosis] [nvarchar](2500) NULL,
+	[NameOfOperation] [nvarchar](2500) NULL,
+	[Anesthesia] [nvarchar](2500) NULL,
+	[AnesthesiaDate] [date] NULL,
+	[AnesthesiaTime] [nvarchar](500) NULL,
+	[ProcedureName] [nvarchar](2500) NULL,
+	[SergeonId] [int] NULL,
+	[AsstSergeonId] [int] NULL,
+	[AnnestheologistId] [int] NULL,
+	[TreatMentOnDisCharge] [nvarchar](2500) NULL,
+	[AdviceOnDischarge] [nvarchar](2500) NULL,
+	[FollowUpOnDischarge] [nvarchar](2500) NULL,
+	[PostedBy] [nvarchar](50) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_in_FIXED_ID]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_in_FIXED_ID](
+	[Id] [int] NOT NULL,
+	[Name] [nvarchar](500) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_in_PATIENT_LEDGER]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_in_PATIENT_LEDGER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TrNo] [nvarchar](50) NOT NULL,
+	[TrDate] [date] NOT NULL,
+	[RegId] [int] NOT NULL,
+	[AdmId] [int] NOT NULL,
+	[BedId] [int] NOT NULL,
+	[TestId] [int] NOT NULL,
+	[TestName] [nvarchar](2500) NOT NULL,
+	[Charge] [float] NOT NULL,
+	[Unit] [int] NOT NULL,
+	[TotCharge] [float] NOT NULL,
+	[LessAmt] [float] NOT NULL,
+	[CollAmt] [float] NOT NULL,
+	[RtnAmt] [float] NOT NULL,
+	[ExtraLessAmt] [float] NOT NULL,
+	[DrId] [int] NOT NULL,
+	[DrAmt] [float] NOT NULL,
+	[LessAdjust] [float] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_in_RELEASE_STATUS]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_in_RELEASE_STATUS](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](100) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_in_TEST_ADD_LIST]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_in_TEST_ADD_LIST](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TrNo] [nvarchar](50) NOT NULL,
+	[TrDate] [date] NOT NULL,
+	[AdmId] [int] NOT NULL,
+	[BedId] [int] NOT NULL,
+	[TestId] [int] NOT NULL,
+	[TestName] [nvarchar](500) NOT NULL,
+	[Charge] [float] NOT NULL,
+	[Unit] [float] NOT NULL,
+	[TotCharge] [float] NOT NULL,
+	[Remarks] [nvarchar](500) NOT NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[IpAddress] [nvarchar](50) NOT NULL,
+	[EntryDate] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_LAB_DOCTOR]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_LAB_DOCTOR](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](350) NOT NULL,
+	[Degree] [nvarchar](1500) NOT NULL,
+	[Position] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_LAB_DOCTOR_DEFAULT]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_LAB_DOCTOR_DEFAULT](
+	[Left] [int] NOT NULL,
+	[Middle] [int] NOT NULL,
+	[Right] [int] NOT NULL,
+	[PcName] [nvarchar](100) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_LAB_STRICKER_INFO]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_LAB_STRICKER_INFO](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[InvNo] [nvarchar](50) NOT NULL,
+	[SampleNo] [nvarchar](50) NOT NULL,
+	[ReportNo] [nvarchar](50) NOT NULL,
+	[TestId] [int] NOT NULL,
+	[CollStatus] [nvarchar](10) NOT NULL,
+	[CollTime] [datetime] NULL,
+	[CollUser] [nvarchar](15) NOT NULL,
+	[SendStatus] [nvarchar](50) NOT NULL,
+	[SendTime] [datetime] NULL,
+	[SendUser] [nvarchar](50) NOT NULL,
+	[ReceiveInLabStatus] [nvarchar](10) NOT NULL,
+	[ReceiveInLabTime] [datetime] NULL,
+	[ReceiveInLabUser] [nvarchar](50) NOT NULL,
+	[ReportPrintStatus] [nvarchar](10) NOT NULL,
+	[ReportPrintTime] [datetime] NULL,
+	[ReportPrintUser] [nvarchar](50) NOT NULL,
+	[ReportProcessStatus] [nvarchar](10) NOT NULL,
+	[ReportProcessTime] [datetime] NULL,
+	[ReportProcessUser] [nvarchar](50) NOT NULL,
+	[RReceiveInDelCounterStatus] [nvarchar](10) NOT NULL,
+	[RReceiveInDelCounterTime] [datetime] NULL,
+	[RReceiveInDelCounterUser] [nvarchar](50) NOT NULL,
+	[DeliverToPatientStatus] [nvarchar](10) NOT NULL,
+	[DeliverToPatientTime] [datetime] NULL,
+	[DeliverToPatientUser] [nvarchar](50) NOT NULL,
+	[RDeliveryDate] [date] NULL,
+	[ReportFileName] [nvarchar](150) NOT NULL,
+	[VaqName] [nvarchar](500) NOT NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[HOSTNAME] [nvarchar](50) NOT NULL,
+	[FinalStatus] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Tb_LeaveApplication]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[Tb_LeaveApplication](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[EmployeeId] [uniqueidentifier] NULL,
+	[LeaveCategory] [nvarchar](max) NULL,
+	[DateFrom] [datetime2](7) NULL,
+	[DateTo] [datetime2](7) NULL,
+	[InformedTo] [uniqueidentifier] NULL,
+	[Reason] [nvarchar](max) NULL,
+	[Status] [nvarchar](max) NULL,
+	[RecommendationBy] [uniqueidentifier] NULL,
+	[ApproverId] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_Tb_LeaveApplication] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_MainProject]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_MainProject](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_MASTER_INFO]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_MASTER_INFO](
+	[ComName] [nvarchar](50) NOT NULL,
+	[Address] [nvarchar](50) NOT NULL,
+	[ReportNo] [int] NULL,
+	[StrickerPrint] [bit] NOT NULL,
+	[GroupwiseBill] [bit] NOT NULL,
+	[UnderDrComision] [bit] NOT NULL,
+	[TakeVaqPrice] [bit] NOT NULL,
+	[UseFinancialService] [int] NOT NULL,
+	[RemarksInGrid] [int] NOT NULL,
+	[ReportPrintDuePercentage] [float] NOT NULL,
+	[UseExpenseEntry] [bit] NOT NULL,
+	[UseIndoor] [bit] NOT NULL,
+	[UsePharmacy] [bit] NOT NULL,
+	[IsCheckPrintNo] [bit] NOT NULL,
+	[AdmissionCharge] [int] NULL,
+	[ReagentIssueNo] [int] NOT NULL,
+	[UseCollFromAdmission] [bit] NOT NULL,
+	[DiscountFromDiag] [nvarchar](50) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_MASTER_PERMISSION]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_MASTER_PERMISSION](
+	[UserName] [nvarchar](50) NOT NULL,
+	[DeleteDueColl] [int] NOT NULL,
+	[DeleteBill] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Tb_Menu]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[Tb_Menu](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MenuName] [nvarchar](max) NOT NULL,
+	[ModuleName] [nvarchar](max) NOT NULL,
+	[ParentMenuId] [int] NULL,
+	[Url] [nvarchar](max) NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[Icon] [nvarchar](max) NOT NULL,
+	[PermissionsKey] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_Tb_Menu] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_MPO]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_MPO](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](500) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_mst_OUTDOOR_DEPT]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_mst_OUTDOOR_DEPT](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_PATIENT]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_PATIENT](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[RegNo] [nvarchar](max) NULL,
+	[Name] [nvarchar](max) NULL,
+	[ContactNo] [nvarchar](max) NULL,
+	[FatherName] [nvarchar](max) NULL,
+	[MotherName] [nvarchar](max) NULL,
+	[Sex] [nvarchar](max) NULL,
+	[Dob] [datetime2](7) NULL,
+	[NID] [nvarchar](max) NULL,
+	[Address] [nvarchar](max) NULL,
+	[Remarks] [nvarchar](max) NULL,
+	[PostedBy] [nvarchar](max) NULL,
+	[EntryDate] [datetime2](7) NULL,
+ CONSTRAINT [PK_tb_PATIENT] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ph_DUE_COLL]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_ph_DUE_COLL](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TrNo] [nvarchar](50) NOT NULL,
+	[TrDate] [date] NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[CollectionAmt] [float] NOT NULL,
+	[LessAmt] [float] NOT NULL,
+	[Remarks] [nvarchar](500) NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[PcName] [nvarchar](50) NOT NULL,
+	[IpAddress] [nvarchar](50) NOT NULL,
+	[AdmId] [int] NOT NULL,
+	[CustId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ph_ITEM]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_ph_ITEM](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[GroupId] [int] NOT NULL,
+	[SuppId] [int] NOT NULL,
+	[Name] [nvarchar](400) NOT NULL,
+	[GenericName] [nvarchar](max) NOT NULL,
+	[SalePrice] [float] NOT NULL,
+	[WholeSalePrice] [float] NOT NULL,
+	[ReOrderQty] [int] NOT NULL,
+	[IsDiscItem] [int] NOT NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[PostedBy] [nvarchar](max) NOT NULL,
+	[LastUpdateDtls] [nvarchar](max) NOT NULL,
+	[PcName] [nvarchar](max) NOT NULL,
+	[IpAddress] [nvarchar](max) NOT NULL,
+	[LastPPrice] [float] NOT NULL,
+	[RackNo] [nvarchar](100) NULL,
+ CONSTRAINT [PK_tb_ph_ITEM] PRIMARY KEY CLUSTERED 
+(
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ph_ITEM_GROUP]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_ph_ITEM_GROUP](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](max) NOT NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ph_PURCHASE_DETAIL]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_ph_PURCHASE_DETAIL](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[ItemId] [int] NOT NULL,
+	[Qty] [float] NOT NULL,
+	[UnitPrice] [float] NOT NULL,
+	[BQty] [float] NOT NULL,
+	[UnitTotal] [float] NOT NULL,
+	[VatPc] [float] NOT NULL,
+	[VatAmt] [float] NOT NULL,
+	[ComPc] [float] NOT NULL,
+	[ComAmt] [float] NOT NULL,
+	[Tp] [float] NOT NULL,
+	[ExpireDate] [date] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ph_PURCHASE_DUE_PAYMENT]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_ph_PURCHASE_DUE_PAYMENT](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TrNo] [nvarchar](50) NOT NULL,
+	[TrDate] [date] NOT NULL,
+	[SuppId] [int] NOT NULL,
+	[PaymentAmt] [float] NOT NULL,
+	[LessAmt] [float] NOT NULL,
+	[Remarks] [nvarchar](500) NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[PcName] [nvarchar](50) NOT NULL,
+	[IpAddress] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ph_PURCHASE_LEDGER]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_ph_PURCHASE_LEDGER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TrNo] [nvarchar](50) NOT NULL,
+	[TrDate] [date] NOT NULL,
+	[SuppId] [int] NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[PurchaseAmt] [float] NOT NULL,
+	[LessAmt] [float] NOT NULL,
+	[RtnAmt] [float] NOT NULL,
+	[PaymentAmt] [float] NOT NULL,
+	[PostedBy] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ph_PURCHASE_MASTER]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_ph_PURCHASE_MASTER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[BillNo] [nvarchar](50) NOT NULL,
+	[BillDate] [date] NOT NULL,
+	[ReceiptNo] [nvarchar](50) NULL,
+	[ReceiptDate] [date] NOT NULL,
+	[SuppId] [int] NOT NULL,
+	[TotItem] [float] NOT NULL,
+	[TotAmt] [float] NOT NULL,
+	[NetAmt] [float] NOT NULL,
+	[TotVat] [float] NOT NULL,
+	[TotComision] [float] NOT NULL,
+	[TotLess] [float] NOT NULL,
+	[TotPaid] [float] NOT NULL,
+	[Remarks] [nvarchar](500) NOT NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[PcName] [nvarchar](150) NOT NULL,
+	[IpAddress] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ph_PURCHASE_RETURN_DETAIL]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_ph_PURCHASE_RETURN_DETAIL](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[ItemId] [int] NOT NULL,
+	[Qty] [float] NOT NULL,
+	[UnitPrice] [float] NOT NULL,
+	[UnitTotal] [float] NOT NULL,
+	[ExpireDate] [date] NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ph_PURCHASE_RETURN_MASTER]    Script Date: 31/12/2025 13:28:59 ******/
+CREATE TABLE [dbo].[tb_ph_PURCHASE_RETURN_MASTER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[BillNo] [nvarchar](50) NOT NULL,
+	[BillDate] [date] NOT NULL,
+	[SuppId] [int] NOT NULL,
+	[TotItem] [float] NOT NULL,
+	[TotAmt] [float] NOT NULL,
+	[Remarks] [nvarchar](500) NOT NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[PcName] [nvarchar](150) NOT NULL,
+	[IpAddress] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ph_SALES_DETAIL]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_ph_SALES_DETAIL](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[ItemId] [int] NOT NULL,
+	[PurchasePrice] [float] NOT NULL,
+	[Qty] [float] NOT NULL,
+	[UnitPrice] [float] NOT NULL,
+	[UnitTotal] [float] NOT NULL,
+	[VatAmt] [float] NOT NULL,
+	[LessAmt] [float] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ph_SALES_LEDGER]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_ph_SALES_LEDGER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TrNo] [nvarchar](50) NOT NULL,
+	[TrDate] [date] NOT NULL,
+	[CustId] [int] NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[SalesAmt] [float] NOT NULL,
+	[LessAmt] [float] NOT NULL,
+	[RtnAmt] [float] NOT NULL,
+	[CollAmt] [float] NOT NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[AdmId] [int] NOT NULL,
+	[LessAdjust] [float] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ph_SALES_MASTER]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_ph_SALES_MASTER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[BillNo] [nvarchar](50) NOT NULL,
+	[BillDate] [date] NOT NULL,
+	[CustId] [int] NOT NULL,
+	[TotItem] [float] NOT NULL,
+	[TotAmt] [float] NOT NULL,
+	[TotVat] [float] NOT NULL,
+	[TotLess] [float] NOT NULL,
+	[TotPaid] [float] NOT NULL,
+	[Remarks] [nvarchar](500) NOT NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[PcName] [nvarchar](150) NOT NULL,
+	[IpAddress] [nvarchar](50) NOT NULL,
+	[AdmId] [int] NOT NULL,
+	[BillTime] [nvarchar](150) NOT NULL,
+	[Name] [nvarchar](1000) NOT NULL,
+	[Age] [nvarchar](1000) NOT NULL,
+	[ContactNo] [nvarchar](1000) NOT NULL,
+	[Address] [nvarchar](1000) NOT NULL,
+	[Sex] [nvarchar](1000) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ph_SALES_RETURN_DETAIL]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_ph_SALES_RETURN_DETAIL](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[ItemId] [int] NOT NULL,
+	[PurchasePrice] [float] NOT NULL,
+	[Qty] [float] NOT NULL,
+	[UnitPrice] [float] NOT NULL,
+	[UnitTotal] [float] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ph_SALES_RETURN_MASTER]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_ph_SALES_RETURN_MASTER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[BillNo] [nvarchar](50) NOT NULL,
+	[BillDate] [date] NOT NULL,
+	[RefNo] [nvarchar](50) NOT NULL,
+	[RefDate] [date] NOT NULL,
+	[CustId] [int] NOT NULL,
+	[TotItem] [float] NOT NULL,
+	[TotAmt] [float] NOT NULL,
+	[Remarks] [nvarchar](500) NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[PcName] [nvarchar](150) NOT NULL,
+	[IpAddress] [nvarchar](50) NOT NULL,
+	[AdmId] [int] NOT NULL,
+	[TotLess] [money] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ph_STOCK_LEDGER]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_ph_STOCK_LEDGER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[TrNo] [nvarchar](50) NOT NULL,
+	[TrDate] [date] NOT NULL,
+	[ItemId] [int] NOT NULL,
+	[PurchasePrice] [float] NOT NULL,
+	[SalesPrice] [float] NOT NULL,
+	[InQty] [float] NOT NULL,
+	[OutQty] [float] NOT NULL,
+	[Module] [nvarchar](50) NOT NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[CustId] [int] NOT NULL,
+	[AdmId] [int] NOT NULL,
+	[ExpireDate] [date] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_ph_SUPPLIER]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_ph_SUPPLIER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](max) NOT NULL,
+	[Address] [nvarchar](max) NOT NULL,
+	[ContactNo] [nvarchar](max) NOT NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[ComId] [nvarchar](500) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_REAGENT]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_REAGENT](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](2500) NOT NULL,
+	[Type] [nvarchar](50) NOT NULL,
+	[ReorderLevel] [int] NOT NULL,
+	[DeptName] [nvarchar](500) NOT NULL,
+	[LastPrice] [float] NOT NULL,
+	[IsExpire] [int] NOT NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[LastUpdateDtls] [nvarchar](1500) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_reagent_ISSUE_TYPE]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_reagent_ISSUE_TYPE](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_reagent_PURCHASE_DETAIL]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_reagent_PURCHASE_DETAIL](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[ItemId] [int] NOT NULL,
+	[Qty] [float] NOT NULL,
+	[UnitPrice] [float] NOT NULL,
+	[BQty] [float] NOT NULL,
+	[UnitTotal] [float] NOT NULL,
+	[VatPc] [float] NOT NULL,
+	[VatAmt] [float] NOT NULL,
+	[ComPc] [float] NOT NULL,
+	[ComAmt] [float] NOT NULL,
+	[Tp] [float] NOT NULL,
+	[ExpireDate] [date] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_reagent_PURCHASE_LEDGER]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_reagent_PURCHASE_LEDGER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TrNo] [nvarchar](50) NOT NULL,
+	[TrDate] [date] NOT NULL,
+	[SuppId] [int] NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[PurchaseAmt] [float] NOT NULL,
+	[LessAmt] [float] NOT NULL,
+	[RtnAmt] [float] NOT NULL,
+	[PaymentAmt] [float] NOT NULL,
+	[PostedBy] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_reagent_PURCHASE_MASTER]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_reagent_PURCHASE_MASTER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[BillNo] [nvarchar](50) NOT NULL,
+	[BillDate] [date] NOT NULL,
+	[ReceiptNo] [nvarchar](50) NULL,
+	[ReceiptDate] [date] NOT NULL,
+	[SuppId] [int] NOT NULL,
+	[TotItem] [float] NOT NULL,
+	[TotAmt] [float] NOT NULL,
+	[NetAmt] [float] NOT NULL,
+	[TotVat] [float] NOT NULL,
+	[TotComision] [float] NOT NULL,
+	[TotLess] [float] NOT NULL,
+	[TotPaid] [float] NOT NULL,
+	[Remarks] [nvarchar](500) NOT NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[PcName] [nvarchar](150) NOT NULL,
+	[IpAddress] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_reagent_STOCK_LEDGER]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_reagent_STOCK_LEDGER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[TrNo] [nvarchar](50) NOT NULL,
+	[TrDate] [date] NOT NULL,
+	[ItemId] [int] NOT NULL,
+	[PurchasePrice] [float] NOT NULL,
+	[SalesPrice] [float] NOT NULL,
+	[LotNo] [nvarchar](100) NULL,
+	[ExpireDate] [date] NOT NULL,
+	[InQty] [float] NOT NULL,
+	[OutQty] [float] NOT NULL,
+	[Module] [nvarchar](50) NOT NULL,
+	[EntryDate] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_REAGENT_SUPPLIER]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_REAGENT_SUPPLIER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](max) NOT NULL,
+	[Address] [nvarchar](max) NOT NULL,
+	[ContactNo] [nvarchar](max) NOT NULL,
+	[EntryDate] [datetime] NOT NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_reagent_TEST_BRIDGE]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_reagent_TEST_BRIDGE](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TestId] [int] NOT NULL,
+	[ReagentId] [int] NOT NULL,
+	[Qty] [float] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_REPORT_CALCULATION]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_REPORT_CALCULATION](
+	[TestId] [int] NOT NULL,
+	[Parameter] [nvarchar](50) NULL,
+	[Sign] [nvarchar](50) NULL,
+	[Result] [float] NULL,
+	[GroupB] [nvarchar](50) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_REPORT_COMMENT_DEFAULT]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_REPORT_COMMENT_DEFAULT](
+	[TestId] [int] NOT NULL,
+	[Name] [nvarchar](max) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_REPORT_DETAILS]    Script Date: 31/12/2025 13:29:00 ******/
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[tb_REPORT_DETAILS](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[TestChartId] [int] NOT NULL,
+	[MachineParam] [nvarchar](50) NOT NULL,
+	[ReportParam] [nvarchar](250) NULL,
+	[ReportingGroup] [nvarchar](250) NULL,
+	[Result] [nvarchar](2050) NULL,
+	[NormalRange] [nvarchar](2050) NULL,
+	[Unit] [nvarchar](250) NULL,
+	[GroupSl] [int] NULL,
+	[ParamSl] [int] NULL,
+	[IsBold] [int] NULL,
+	[ReportNo] [nvarchar](50) NULL,
+	[IsPrint] [int] NOT NULL,
+	[GroupName] [varchar](50) NOT NULL,
+	[BillNo] [varchar](20) NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[tb_REPORT_HEADER_DEFAULT]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_REPORT_HEADER_DEFAULT](
+	[ReportFileName] [nvarchar](50) NOT NULL,
+	[HeaderName] [nvarchar](1000) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_REPORT_MASTER]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_REPORT_MASTER](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MasterId] [int] NOT NULL,
+	[ReportNo] [nvarchar](50) NOT NULL,
+	[LeftDrName] [nvarchar](1500) NULL,
+	[LeftDrDegree] [nvarchar](2500) NULL,
+	[MiddleDrName] [nvarchar](1500) NULL,
+	[MiddleDrDegree] [nvarchar](2500) NULL,
+	[RightDrName] [nvarchar](1500) NULL,
+	[RightDrDegree] [nvarchar](2500) NULL,
+	[Comment] [nvarchar](2500) NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[RtfFile] [nvarchar](max) NOT NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_SubProject]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_SubProject](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MainProjectId] [int] NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[HnrAmt] [float] NOT NULL,
+	[Type] [nvarchar](50) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_TEST_DELIVER_AFTER_DAY]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_TEST_DELIVER_AFTER_DAY](
+	[TestId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_TESTCHART]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_TESTCHART](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](150) NOT NULL,
+	[Charge] [float] NOT NULL,
+	[MAXDISCOUNT] [float] NOT NULL,
+	[IsDiscountItem] [int] NOT NULL,
+	[SubProjectId] [int] NOT NULL,
+	[IsVaqItem] [int] NOT NULL,
+	[UserName] [nvarchar](100) NOT NULL,
+	[ReportFileName] [nvarchar](50) NULL,
+	[EntryDate] [datetime] NOT NULL,
+	[Specimen] [nvarchar](50) NULL,
+	[VaqName] [nvarchar](350) NOT NULL,
+	[ReportFee] [float] NOT NULL,
+	[IsDoctor] [int] NOT NULL,
+	[IsIndoorItem] [int] NOT NULL,
+	[ChangeCharge] [int] NOT NULL,
+	[RoomNo] [nvarchar](500) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_TESTCHART_DEF_RESULT]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_TESTCHART_DEF_RESULT](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TestChartId] [int] NOT NULL,
+	[MachineParam] [nvarchar](50) NOT NULL,
+	[Result] [nvarchar](300) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_TESTCHART_MACHINE_PARAM]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_TESTCHART_MACHINE_PARAM](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MachineParam] [nvarchar](50) NOT NULL,
+	[TestParam] [nvarchar](50) NOT NULL,
+	[MachineName] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_TESTCHART_PARAM]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_TESTCHART_PARAM](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TestChartId] [int] NOT NULL,
+	[GroupSl] [int] NOT NULL,
+	[ParamSl] [int] NOT NULL,
+	[MachineParam] [nvarchar](500) NOT NULL,
+	[ReportParam] [nvarchar](500) NOT NULL,
+	[ReportingGroup] [nvarchar](500) NULL,
+	[NormalRange] [nvarchar](1000) NULL,
+	[Unit] [nvarchar](500) NULL,
+	[DefaultResult] [nvarchar](1050) NULL,
+	[IsBold] [int] NOT NULL,
+	[LowerVal] [money] NOT NULL,
+	[UpperVal] [money] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_TESTCHART_PARAM_MICRO_GROWTH]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_TESTCHART_PARAM_MICRO_GROWTH](
+	[SlNo] [int] NOT NULL,
+	[DrugName] [nvarchar](500) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_TESTCHART_VAQ]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_TESTCHART_VAQ](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](500) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_TESTCHART_VAQ_FOR_BILL]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_TESTCHART_VAQ_FOR_BILL](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TestId] [int] NOT NULL,
+	[VaqId] [int] NOT NULL,
+	[Charge] [money] NOT NULL,
+	[UserName] [nvarchar](50) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Tb_User]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[Tb_User](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [nvarchar](max) NOT NULL,
+	[Password] [nvarchar](max) NOT NULL,
+	[EId] [uniqueidentifier] NULL,
+	[IsActive] [bit] NOT NULL,
+ CONSTRAINT [PK_Tb_User] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_USER_PRIVILEGE]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_USER_PRIVILEGE](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [nvarchar](50) NOT NULL,
+	[Password] [nvarchar](50) NOT NULL,
+	[ParentName] [nvarchar](50) NOT NULL,
+	[ChildName] [nvarchar](50) NOT NULL,
+	[PostedBy] [nvarchar](50) NOT NULL,
+	[EntryDate] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_USER_PRIVILEGE_DTLS]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_USER_PRIVILEGE_DTLS](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [nvarchar](50) NOT NULL,
+	[ParentName] [nvarchar](50) NULL,
+	[PermisionName] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Tb_UserMenuPermission]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[Tb_UserMenuPermission](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [int] NOT NULL,
+	[MenuId] [int] NOT NULL,
+	[Permission] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Tb_UserMenuPermission] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tb_VALIDATION]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[tb_VALIDATION](
+	[RawData1] [nvarchar](1500) NOT NULL,
+	[RawData2] [nvarchar](1500) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Update_Record_Of_Patient]    Script Date: 31/12/2025 13:29:00 ******/
+CREATE TABLE [dbo].[Update_Record_Of_Patient](
+	[BillNo] [nvarchar](1000) NULL,
+	[Name] [nvarchar](1000) NULL,
+	[DrName] [nvarchar](1000) NULL,
+	[Sex] [nvarchar](1000) NULL,
+	[PostedBy] [nvarchar](1000) NULL
+) ON [PRIMARY]
+
+GO
+ALTER TABLE [dbo].[A_tb_IN_BILL_TMP] ADD  DEFAULT ((0)) FOR [AdmId]
+GO
+ALTER TABLE [dbo].[A_tb_IN_BILL_TMP] ADD  DEFAULT ((0)) FOR [RegId]
+GO
+ALTER TABLE [dbo].[A_tb_IN_BILL_TMP] ADD  DEFAULT ((0)) FOR [BedId]
+GO
+ALTER TABLE [dbo].[A_tb_IN_BILL_TMP] ADD  DEFAULT ((0)) FOR [TotalAmt]
+GO
+ALTER TABLE [dbo].[A_tb_IN_BILL_TMP] ADD  DEFAULT ((0)) FOR [TotalDiscount]
+GO
+ALTER TABLE [dbo].[A_tb_IN_BILL_TMP] ADD  DEFAULT ((0)) FOR [AdvanceAmt]
+GO
+ALTER TABLE [dbo].[A_tb_IN_BILL_TMP] ADD  DEFAULT ((0)) FOR [PaidAmt]
+GO
+ALTER TABLE [dbo].[A_tb_IN_BILL_TMP] ADD  DEFAULT ((0)) FOR [TestId]
+GO
+ALTER TABLE [dbo].[A_tb_IN_BILL_TMP] ADD  DEFAULT ((0)) FOR [Charge]
+GO
+ALTER TABLE [dbo].[A_tb_IN_BILL_TMP] ADD  DEFAULT ((0)) FOR [Unit]
+GO
+ALTER TABLE [dbo].[A_tb_IN_BILL_TMP] ADD  DEFAULT ((0)) FOR [TotCharge]
+GO
+ALTER TABLE [dbo].[A_tb_IN_BILL_TMP] ADD  DEFAULT ((0)) FOR [LessAmt]
+GO
+ALTER TABLE [dbo].[A_tb_IN_BILL_TMP] ADD  DEFAULT ((0)) FOR [ExtraLess]
+GO
+ALTER TABLE [dbo].[DEL_RECORD_OF_BILL_DELETE] ADD  DEFAULT ((0)) FOR [MasterId]
+GO
+ALTER TABLE [dbo].[DEL_RECORD_OF_BILL_DELETE] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[DEL_RECORD_OF_BILL_DELETE] ADD  DEFAULT ('') FOR [PcName]
+GO
+ALTER TABLE [dbo].[DEL_RECORD_OF_BILL_DELETE] ADD  DEFAULT ('') FOR [IpAddress]
+GO
+ALTER TABLE [dbo].[EDIT_RECORD_OF_BILL] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[EDIT_RECORD_OF_BILL] ADD  DEFAULT ((0)) FOR [PrevAmt]
+GO
+ALTER TABLE [dbo].[EDIT_RECORD_OF_BILL] ADD  DEFAULT ((0)) FOR [CurrAmt]
+GO
+ALTER TABLE [dbo].[EDIT_RECORD_OF_BILL] ADD  DEFAULT ((0)) FOR [PrevTestNo]
+GO
+ALTER TABLE [dbo].[EDIT_RECORD_OF_BILL] ADD  DEFAULT ((0)) FOR [CurrTestNo]
+GO
+ALTER TABLE [dbo].[tb_ac_EXPENSE_ENTRY] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_ac_INCOME_ENTRY] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_app_APPOINTMENT] ADD  DEFAULT (getdate()) FOR [EntryDateTime]
+GO
+ALTER TABLE [dbo].[tb_app_APPOINTMENT] ADD  DEFAULT ('') FOR [Remarks]
+GO
+ALTER TABLE [dbo].[tb_app_APPOINTMENT] ADD  DEFAULT ((0)) FOR [PaidAmt]
+GO
+ALTER TABLE [dbo].[tb_BILL_DETAIL] ADD  CONSTRAINT [DF__InvDetail__Amoun__4AB81AF0]  DEFAULT ((0)) FOR [Charge]
+GO
+ALTER TABLE [dbo].[tb_BILL_DETAIL] ADD  CONSTRAINT [DF__InvDetail__Quant__4CA06362]  DEFAULT ((0)) FOR [Quantity]
+GO
+ALTER TABLE [dbo].[tb_BILL_DETAIL] ADD  CONSTRAINT [DF_tb_BILL_DETAIL_ActualCharge]  DEFAULT ((0)) FOR [ActualCharge]
+GO
+ALTER TABLE [dbo].[tb_BILL_DETAIL] ADD  CONSTRAINT [DF_InvDetail_AfterDiscount]  DEFAULT ((0)) FOR [HnrAmt]
+GO
+ALTER TABLE [dbo].[tb_BILL_DETAIL] ADD  CONSTRAINT [DF_InvDetail_RefDiscount]  DEFAULT ((0)) FOR [DrLess]
+GO
+ALTER TABLE [dbo].[tb_BILL_DETAIL] ADD  CONSTRAINT [DF_InvDetail_TotRefAmount]  DEFAULT ((0)) FOR [TotHnrAmt]
+GO
+ALTER TABLE [dbo].[tb_BILL_DETAIL] ADD  DEFAULT ((0)) FOR [PrintStatus]
+GO
+ALTER TABLE [dbo].[tb_BILL_DETAIL] ADD  DEFAULT ((1)) FOR [Valid]
+GO
+ALTER TABLE [dbo].[tb_BILL_DETAIL] ADD  DEFAULT ('') FOR [SampleNo]
+GO
+ALTER TABLE [dbo].[tb_BILL_DETAIL] ADD  DEFAULT ('') FOR [GridRemarks]
+GO
+ALTER TABLE [dbo].[tb_BILL_DETAIL] ADD  DEFAULT ((0)) FOR [BillTimeLess]
+GO
+ALTER TABLE [dbo].[tb_BILL_LEDGER] ADD  CONSTRAINT [DF_tb_BILL_LEDGER_SalesAmt]  DEFAULT ((0)) FOR [SalesAmt]
+GO
+ALTER TABLE [dbo].[tb_BILL_LEDGER] ADD  CONSTRAINT [DF_tb_BILL_LEDGER_LessAmt]  DEFAULT ((0)) FOR [LessAmt]
+GO
+ALTER TABLE [dbo].[tb_BILL_LEDGER] ADD  CONSTRAINT [DF_tb_BILL_LEDGER_RtnAmt]  DEFAULT ((0)) FOR [RtnAmt]
+GO
+ALTER TABLE [dbo].[tb_BILL_LEDGER] ADD  CONSTRAINT [DF_tb_BILL_LEDGER_CollAmt]  DEFAULT ((0)) FOR [CollAmt]
+GO
+ALTER TABLE [dbo].[tb_BILL_LEDGER] ADD  DEFAULT ((1)) FOR [DeptId]
+GO
+ALTER TABLE [dbo].[tb_BILL_MASTER] ADD  CONSTRAINT [DF_tb_BillMaster_RegId]  DEFAULT ((0)) FOR [RegId]
+GO
+ALTER TABLE [dbo].[tb_BILL_MASTER] ADD  CONSTRAINT [DF__InvMaster__Total__5AEE82B9]  DEFAULT ((0)) FOR [TotalAmt]
+GO
+ALTER TABLE [dbo].[tb_BILL_MASTER] ADD  CONSTRAINT [DF__InvMaster__Disco__5CD6CB2B]  DEFAULT ((0)) FOR [LessAmt]
+GO
+ALTER TABLE [dbo].[tb_BILL_MASTER] ADD  CONSTRAINT [DF_tb_BillMaster_LessFrom]  DEFAULT ((0)) FOR [LessFrom]
+GO
+ALTER TABLE [dbo].[tb_BILL_MASTER] ADD  CONSTRAINT [DF__InvMaster__Advan__5DCAEF64]  DEFAULT ((0)) FOR [CollAmt]
+GO
+ALTER TABLE [dbo].[tb_BILL_MASTER] ADD  CONSTRAINT [DF_tb_BILL_MASTER_LessPc]  DEFAULT ((0)) FOR [LessPc]
+GO
+ALTER TABLE [dbo].[tb_BILL_MASTER] ADD  CONSTRAINT [DF__InvMaster__Valid__5BE2A6F2]  DEFAULT ((1)) FOR [IsShow]
+GO
+ALTER TABLE [dbo].[tb_BILL_MASTER] ADD  CONSTRAINT [DF__InvMaster__IsTra__6383C8BA]  DEFAULT ((0)) FOR [IsTransfer]
+GO
+ALTER TABLE [dbo].[tb_BILL_MASTER] ADD  DEFAULT (getdate()) FOR [DeliveryDate]
+GO
+ALTER TABLE [dbo].[tb_BILL_MASTER] ADD  DEFAULT ('') FOR [DeliveryNumber]
+GO
+ALTER TABLE [dbo].[tb_BILL_MASTER] ADD  DEFAULT ('') FOR [DeliveryTimeAmPm]
+GO
+ALTER TABLE [dbo].[tb_BILL_MASTER] ADD  DEFAULT ('') FOR [LastPrintPc]
+GO
+ALTER TABLE [dbo].[tb_BILL_MASTER] ADD  DEFAULT ('') FOR [PcName]
+GO
+ALTER TABLE [dbo].[tb_BILL_MASTER] ADD  DEFAULT ('') FOR [IpAddress]
+GO
+ALTER TABLE [dbo].[tb_BILL_MASTER] ADD  DEFAULT ((0)) FOR [AdmId]
+GO
+ALTER TABLE [dbo].[tb_BILL_MASTER] ADD  DEFAULT ((1)) FOR [DeptId]
+GO
+ALTER TABLE [dbo].[tb_BILL_MASTER] ADD  DEFAULT ((0)) FOR [IsPaidHnr]
+GO
+ALTER TABLE [dbo].[tb_BILL_RETURN] ADD  DEFAULT ((0)) FOR [InvoiceValue]
+GO
+ALTER TABLE [dbo].[tb_BILL_RETURN] ADD  DEFAULT ((0)) FOR [TotalReturn]
+GO
+ALTER TABLE [dbo].[tb_BILL_RETURN] ADD  DEFAULT ((0)) FOR [Charge]
+GO
+ALTER TABLE [dbo].[tb_BILL_RETURN] ADD  DEFAULT ((0)) FOR [LessAmt]
+GO
+ALTER TABLE [dbo].[tb_BILL_RETURN] ADD  DEFAULT ((0)) FOR [RtnAmt]
+GO
+ALTER TABLE [dbo].[tb_BILL_RETURN] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_BILL_RETURN] ADD  DEFAULT ((0)) FOR [CashRtn]
+GO
+ALTER TABLE [dbo].[tb_BILL_RETURN] ADD  DEFAULT ((0)) FOR [DueAdjust]
+GO
+ALTER TABLE [dbo].[tb_DEFAULT_DELIVERY_DATETIME] ADD  CONSTRAINT [DF_tb_DEFAULT_DELIVERY_DATETIME_Date]  DEFAULT (getdate()) FOR [Date]
+GO
+ALTER TABLE [dbo].[tb_DEFAULT_DELIVERY_DATETIME] ADD  CONSTRAINT [DF_tb_DEFAULT_DELIVERY_DATETIME_TimeNumber]  DEFAULT ((5)) FOR [TimeNumber]
+GO
+ALTER TABLE [dbo].[tb_DEFAULT_DELIVERY_DATETIME] ADD  CONSTRAINT [DF_tb_DEFAULT_DELIVERY_DATETIME_TimeAmPm]  DEFAULT (N'PM') FOR [TimeAmPm]
+GO
+ALTER TABLE [dbo].[tb_DEFAULT_DELIVERY_DATETIME] ADD  CONSTRAINT [DF_tb_DEFAULT_DELIVERY_DATETIME_HostName]  DEFAULT (N'WORK-PC') FOR [HostName]
+GO
+ALTER TABLE [dbo].[tb_DigitalVd] ADD  CONSTRAINT [DF_tb_DigitalVd_Price]  DEFAULT ((0)) FOR [Price]
+GO
+ALTER TABLE [dbo].[tb_DigitalVd] ADD  CONSTRAINT [DF_tb_DigitalVd_Less]  DEFAULT ((0)) FOR [Less]
+GO
+ALTER TABLE [dbo].[tb_DigitalVd] ADD  CONSTRAINT [DF_tb_DigitalVd_RefAmt]  DEFAULT ((0)) FOR [RefAmt]
+GO
+ALTER TABLE [dbo].[tb_DigitalVd] ADD  CONSTRAINT [DF_tb_DigitalVd_DrOneAmt]  DEFAULT ((0)) FOR [DrOneAmt]
+GO
+ALTER TABLE [dbo].[tb_DigitalVd] ADD  CONSTRAINT [DF_tb_DigitalVd_DrTwoAmt]  DEFAULT ((0)) FOR [DrTwoAmt]
+GO
+ALTER TABLE [dbo].[tb_DigitalVd] ADD  CONSTRAINT [DF_tb_DigitalVd_DrThreeAmt]  DEFAULT ((0)) FOR [DrThreeAmt]
+GO
+ALTER TABLE [dbo].[tb_DigitalVd] ADD  CONSTRAINT [DF_tb_DigitalVd_Balance]  DEFAULT ((0)) FOR [Balance]
+GO
+ALTER TABLE [dbo].[tb_DigitalVd] ADD  CONSTRAINT [DF_tb_DigitalVd_Paid]  DEFAULT ((0)) FOR [Paid]
+GO
+ALTER TABLE [dbo].[tb_DigitalVd] ADD  CONSTRAINT [DF_tb_DigitalVd_EntryDate]  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_DOCTOR_LEDGER] ADD  CONSTRAINT [DF_tb_DOCTOR_LEDGER_Charge]  DEFAULT ((0)) FOR [Charge]
+GO
+ALTER TABLE [dbo].[tb_DOCTOR_LEDGER] ADD  CONSTRAINT [DF_tb_DOCTOR_LEDGER_HnrAmt]  DEFAULT ((0)) FOR [HnrAmt]
+GO
+ALTER TABLE [dbo].[tb_DOCTOR_LEDGER] ADD  CONSTRAINT [DF_tb_DOCTOR_LEDGER_LessAmt]  DEFAULT ((0)) FOR [LessAmt]
+GO
+ALTER TABLE [dbo].[tb_DOCTOR_LEDGER] ADD  CONSTRAINT [DF_tb_DOCTOR_LEDGER_PaidAmt]  DEFAULT ((0)) FOR [PaidAmt]
+GO
+ALTER TABLE [dbo].[tb_DOCTOR_LEDGER] ADD  DEFAULT ((0)) FOR [DueCollLess]
+GO
+ALTER TABLE [dbo].[Tb_DoctorFee] ADD  DEFAULT (newid()) FOR [Gid]
+GO
+ALTER TABLE [dbo].[tb_DrWiseHonorium] ADD  CONSTRAINT [DF_tb_DrWiseHonorium_HonouriamAmt]  DEFAULT ((0)) FOR [HonouriamAmt]
+GO
+ALTER TABLE [dbo].[tb_DrWiseHonorium] ADD  CONSTRAINT [DF_tb_DrWiseHonorium_EntryDate]  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_DUE_COLL] ADD  CONSTRAINT [DF__InvPaid__TotalAm__48CFD27E]  DEFAULT ((0)) FOR [TotalAmt]
+GO
+ALTER TABLE [dbo].[tb_DUE_COLL] ADD  CONSTRAINT [DF__InvPaid__Discoun__47DBAE45]  DEFAULT ((0)) FOR [LessAmt]
+GO
+ALTER TABLE [dbo].[tb_DUE_COLL] ADD  CONSTRAINT [DF_tb_DUE_COLL_LessPc]  DEFAULT ((0)) FOR [LessPc]
+GO
+ALTER TABLE [dbo].[tb_DUE_COLL] ADD  CONSTRAINT [DF__InvPaid__Valid__440B1D61]  DEFAULT ((1)) FOR [IsShow]
+GO
+ALTER TABLE [dbo].[tb_DUE_COLL] ADD  DEFAULT ('') FOR [PcName]
+GO
+ALTER TABLE [dbo].[tb_DUE_COLL] ADD  DEFAULT ('') FOR [IpAddress]
+GO
+ALTER TABLE [dbo].[tb_DUE_COLL] ADD  DEFAULT ((0)) FOR [AdmId]
+GO
+ALTER TABLE [dbo].[tb_DUE_COLL] ADD  DEFAULT ((1)) FOR [DeptId]
+GO
+ALTER TABLE [dbo].[Tb_Employee] ADD  DEFAULT (newid()) FOR [EId]
+GO
+ALTER TABLE [dbo].[tb_Expense_Patient] ADD  DEFAULT ((0)) FOR [ExpenseId]
+GO
+ALTER TABLE [dbo].[tb_Expense_Patient] ADD  DEFAULT ((0)) FOR [Amount]
+GO
+ALTER TABLE [dbo].[tb_FINANCIAL_COLLECTION] ADD  CONSTRAINT [DF_tb_FINANCIAL_COLLECTION_Amount]  DEFAULT ((0)) FOR [Amount]
+GO
+ALTER TABLE [dbo].[tb_in_ADMISSION] ADD  DEFAULT ((0)) FOR [RefId]
+GO
+ALTER TABLE [dbo].[tb_in_ADMISSION] ADD  DEFAULT ((0)) FOR [UnderDrId]
+GO
+ALTER TABLE [dbo].[tb_in_ADMISSION] ADD  DEFAULT ((0)) FOR [AdmCharge]
+GO
+ALTER TABLE [dbo].[tb_in_ADMISSION] ADD  DEFAULT ((0)) FOR [ReleaseStatus]
+GO
+ALTER TABLE [dbo].[tb_in_ADMISSION] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_in_ADMISSION] ADD  DEFAULT ('') FOR [FatherName]
+GO
+ALTER TABLE [dbo].[tb_in_ADMISSION] ADD  DEFAULT ('') FOR [MotherName]
+GO
+ALTER TABLE [dbo].[tb_in_ADVANCE_COLLECTION] ADD  DEFAULT ((0)) FOR [Amount]
+GO
+ALTER TABLE [dbo].[tb_in_ADVANCE_COLLECTION] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_in_BED] ADD  DEFAULT ((0)) FOR [Charge]
+GO
+ALTER TABLE [dbo].[tb_in_BED] ADD  DEFAULT ((0)) FOR [SrvCharge]
+GO
+ALTER TABLE [dbo].[tb_in_BED] ADD  DEFAULT ((0)) FOR [BookStatus]
+GO
+ALTER TABLE [dbo].[tb_in_BED] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_in_BILL_DETAIL] ADD  DEFAULT ('') FOR [TestName]
+GO
+ALTER TABLE [dbo].[tb_in_BILL_DETAIL] ADD  DEFAULT ((0)) FOR [Charge]
+GO
+ALTER TABLE [dbo].[tb_in_BILL_DETAIL] ADD  DEFAULT ((0)) FOR [Unit]
+GO
+ALTER TABLE [dbo].[tb_in_BILL_DETAIL] ADD  DEFAULT ((0)) FOR [TotCharge]
+GO
+ALTER TABLE [dbo].[tb_in_BILL_DETAIL] ADD  DEFAULT ((0)) FOR [LessAmt]
+GO
+ALTER TABLE [dbo].[tb_in_BILL_DETAIL] ADD  DEFAULT ((0)) FOR [ExtraLess]
+GO
+ALTER TABLE [dbo].[tb_in_BILL_DETAIL] ADD  DEFAULT ((0)) FOR [DrAmt]
+GO
+ALTER TABLE [dbo].[tb_in_BILL_DETAIL] ADD  DEFAULT ((0)) FOR [DrId]
+GO
+ALTER TABLE [dbo].[tb_IN_BILL_MASTER] ADD  DEFAULT ((0)) FOR [TotalAmt]
+GO
+ALTER TABLE [dbo].[tb_IN_BILL_MASTER] ADD  DEFAULT ((0)) FOR [TotalDiscount]
+GO
+ALTER TABLE [dbo].[tb_IN_BILL_MASTER] ADD  DEFAULT ((0)) FOR [AdvanceAmt]
+GO
+ALTER TABLE [dbo].[tb_IN_BILL_MASTER] ADD  DEFAULT ((0)) FOR [PaidAmt]
+GO
+ALTER TABLE [dbo].[tb_IN_BILL_MASTER] ADD  DEFAULT (getdate()) FOR [Entrydate]
+GO
+ALTER TABLE [dbo].[tb_in_PATIENT_LEDGER] ADD  DEFAULT ((0)) FOR [Charge]
+GO
+ALTER TABLE [dbo].[tb_in_PATIENT_LEDGER] ADD  DEFAULT ((0)) FOR [TotCharge]
+GO
+ALTER TABLE [dbo].[tb_in_PATIENT_LEDGER] ADD  DEFAULT ((0)) FOR [LessAmt]
+GO
+ALTER TABLE [dbo].[tb_in_PATIENT_LEDGER] ADD  DEFAULT ((0)) FOR [CollAmt]
+GO
+ALTER TABLE [dbo].[tb_in_PATIENT_LEDGER] ADD  DEFAULT ((0)) FOR [RtnAmt]
+GO
+ALTER TABLE [dbo].[tb_in_PATIENT_LEDGER] ADD  DEFAULT ((0)) FOR [ExtraLessAmt]
+GO
+ALTER TABLE [dbo].[tb_in_PATIENT_LEDGER] ADD  DEFAULT ((0)) FOR [DrId]
+GO
+ALTER TABLE [dbo].[tb_in_PATIENT_LEDGER] ADD  DEFAULT ((0)) FOR [DrAmt]
+GO
+ALTER TABLE [dbo].[tb_in_PATIENT_LEDGER] ADD  DEFAULT ((0)) FOR [LessAdjust]
+GO
+ALTER TABLE [dbo].[tb_in_TEST_ADD_LIST] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_LAB_DOCTOR_DEFAULT] ADD  CONSTRAINT [DF_tb_DefaultLabDoctorSetting_LabInCharge]  DEFAULT ((0)) FOR [Right]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT (N'N/A') FOR [ReportNo]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT (N'Pending') FOR [CollStatus]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT (N'Pending') FOR [CollUser]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT (N'Pending') FOR [SendStatus]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT (N'Pending') FOR [SendUser]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT (N'Pending') FOR [ReceiveInLabStatus]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT (N'Pending') FOR [ReceiveInLabUser]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT (N'Pending') FOR [ReportPrintStatus]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT (N'Pending') FOR [ReportPrintUser]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT (N'Pending') FOR [ReportProcessStatus]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT (N'Pending') FOR [ReportProcessUser]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT (N'Pending') FOR [RReceiveInDelCounterStatus]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT (N'Pending') FOR [RReceiveInDelCounterUser]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT (N'Pending') FOR [DeliverToPatientStatus]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT (N'Pending') FOR [DeliverToPatientUser]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT ('') FOR [ReportFileName]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT ('') FOR [VaqName]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT (N'N/A') FOR [HOSTNAME]
+GO
+ALTER TABLE [dbo].[tb_LAB_STRICKER_INFO] ADD  DEFAULT ('') FOR [FinalStatus]
+GO
+ALTER TABLE [dbo].[tb_MASTER_INFO] ADD  DEFAULT ((0)) FOR [ReportNo]
+GO
+ALTER TABLE [dbo].[tb_MASTER_INFO] ADD  DEFAULT ((0)) FOR [StrickerPrint]
+GO
+ALTER TABLE [dbo].[tb_MASTER_INFO] ADD  DEFAULT ((0)) FOR [GroupwiseBill]
+GO
+ALTER TABLE [dbo].[tb_MASTER_INFO] ADD  DEFAULT ((0)) FOR [UnderDrComision]
+GO
+ALTER TABLE [dbo].[tb_MASTER_INFO] ADD  DEFAULT ((0)) FOR [TakeVaqPrice]
+GO
+ALTER TABLE [dbo].[tb_MASTER_INFO] ADD  DEFAULT ((0)) FOR [UseFinancialService]
+GO
+ALTER TABLE [dbo].[tb_MASTER_INFO] ADD  DEFAULT ((0)) FOR [RemarksInGrid]
+GO
+ALTER TABLE [dbo].[tb_MASTER_INFO] ADD  DEFAULT ((50)) FOR [ReportPrintDuePercentage]
+GO
+ALTER TABLE [dbo].[tb_MASTER_INFO] ADD  DEFAULT ((0)) FOR [UseExpenseEntry]
+GO
+ALTER TABLE [dbo].[tb_MASTER_INFO] ADD  DEFAULT ((0)) FOR [UseIndoor]
+GO
+ALTER TABLE [dbo].[tb_MASTER_INFO] ADD  DEFAULT ((0)) FOR [UsePharmacy]
+GO
+ALTER TABLE [dbo].[tb_MASTER_INFO] ADD  DEFAULT ((0)) FOR [IsCheckPrintNo]
+GO
+ALTER TABLE [dbo].[tb_MASTER_INFO] ADD  DEFAULT ((1)) FOR [ReagentIssueNo]
+GO
+ALTER TABLE [dbo].[tb_MASTER_INFO] ADD  DEFAULT ((0)) FOR [UseCollFromAdmission]
+GO
+ALTER TABLE [dbo].[tb_MASTER_PERMISSION] ADD  CONSTRAINT [DF_tb_MASTER_PERMISSION_DeleteDueColl]  DEFAULT ((0)) FOR [DeleteDueColl]
+GO
+ALTER TABLE [dbo].[tb_MASTER_PERMISSION] ADD  CONSTRAINT [DF_tb_MASTER_PERMISSION_DeleteBill]  DEFAULT ((0)) FOR [DeleteBill]
+GO
+ALTER TABLE [dbo].[tb_ph_DUE_COLL] ADD  DEFAULT ((0)) FOR [CustId]
+GO
+ALTER TABLE [dbo].[tb_ph_ITEM] ADD  DEFAULT ('') FOR [GenericName]
+GO
+ALTER TABLE [dbo].[tb_ph_ITEM] ADD  DEFAULT ((0)) FOR [SalePrice]
+GO
+ALTER TABLE [dbo].[tb_ph_ITEM] ADD  DEFAULT ((0)) FOR [WholeSalePrice]
+GO
+ALTER TABLE [dbo].[tb_ph_ITEM] ADD  DEFAULT ((0)) FOR [ReOrderQty]
+GO
+ALTER TABLE [dbo].[tb_ph_ITEM] ADD  DEFAULT ((1)) FOR [IsDiscItem]
+GO
+ALTER TABLE [dbo].[tb_ph_ITEM] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_ph_ITEM] ADD  DEFAULT ((0)) FOR [LastPPrice]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [Qty]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [UnitPrice]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [BQty]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [UnitTotal]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [VatPc]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [VatAmt]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [ComPc]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [ComAmt]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [Tp]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_LEDGER] ADD  DEFAULT ((0)) FOR [LessAmt]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_LEDGER] ADD  DEFAULT ((0)) FOR [RtnAmt]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_LEDGER] ADD  DEFAULT ((0)) FOR [PaymentAmt]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_MASTER] ADD  DEFAULT (getdate()) FOR [BillDate]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_MASTER] ADD  DEFAULT (getdate()) FOR [ReceiptDate]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_MASTER] ADD  DEFAULT ((0)) FOR [TotItem]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_MASTER] ADD  DEFAULT ((0)) FOR [TotAmt]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_MASTER] ADD  DEFAULT ((0)) FOR [NetAmt]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_MASTER] ADD  DEFAULT ((0)) FOR [TotVat]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_MASTER] ADD  DEFAULT ((0)) FOR [TotComision]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_MASTER] ADD  DEFAULT ((0)) FOR [TotLess]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_MASTER] ADD  DEFAULT ((0)) FOR [TotPaid]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_MASTER] ADD  DEFAULT (N'N/A') FOR [Remarks]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_MASTER] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_ph_PURCHASE_RETURN_MASTER] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_DETAIL] ADD  DEFAULT ((0)) FOR [PurchasePrice]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_DETAIL] ADD  DEFAULT ((0)) FOR [VatAmt]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_DETAIL] ADD  DEFAULT ((0)) FOR [LessAmt]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_LEDGER] ADD  CONSTRAINT [DF_tb_ph_SALES_LEDGER_AdmId]  DEFAULT ((0)) FOR [AdmId]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_LEDGER] ADD  DEFAULT ((0)) FOR [LessAdjust]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_MASTER] ADD  DEFAULT ((0)) FOR [TotItem]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_MASTER] ADD  DEFAULT ((0)) FOR [TotAmt]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_MASTER] ADD  DEFAULT ((0)) FOR [TotVat]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_MASTER] ADD  DEFAULT ((0)) FOR [TotLess]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_MASTER] ADD  DEFAULT ((0)) FOR [TotPaid]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_MASTER] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_MASTER] ADD  DEFAULT ((0)) FOR [AdmId]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_MASTER] ADD  DEFAULT ('') FOR [BillTime]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_MASTER] ADD  DEFAULT ('') FOR [Name]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_MASTER] ADD  DEFAULT ('') FOR [Age]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_MASTER] ADD  DEFAULT ('') FOR [ContactNo]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_MASTER] ADD  DEFAULT ('') FOR [Address]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_MASTER] ADD  DEFAULT ('') FOR [Sex]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_RETURN_MASTER] ADD  DEFAULT (getdate()) FOR [RefDate]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_RETURN_MASTER] ADD  DEFAULT ((0)) FOR [CustId]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_RETURN_MASTER] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_ph_SALES_RETURN_MASTER] ADD  DEFAULT ((0)) FOR [TotLess]
+GO
+ALTER TABLE [dbo].[tb_ph_STOCK_LEDGER] ADD  DEFAULT ((0)) FOR [PurchasePrice]
+GO
+ALTER TABLE [dbo].[tb_ph_STOCK_LEDGER] ADD  DEFAULT ((0)) FOR [SalesPrice]
+GO
+ALTER TABLE [dbo].[tb_ph_STOCK_LEDGER] ADD  DEFAULT ((0)) FOR [InQty]
+GO
+ALTER TABLE [dbo].[tb_ph_STOCK_LEDGER] ADD  DEFAULT ((0)) FOR [OutQty]
+GO
+ALTER TABLE [dbo].[tb_ph_STOCK_LEDGER] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_ph_STOCK_LEDGER] ADD  DEFAULT ((0)) FOR [CustId]
+GO
+ALTER TABLE [dbo].[tb_ph_STOCK_LEDGER] ADD  DEFAULT ((0)) FOR [AdmId]
+GO
+ALTER TABLE [dbo].[tb_ph_STOCK_LEDGER] ADD  DEFAULT ('2023-12-31') FOR [ExpireDate]
+GO
+ALTER TABLE [dbo].[tb_ph_SUPPLIER] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_REAGENT] ADD  DEFAULT ((0)) FOR [ReorderLevel]
+GO
+ALTER TABLE [dbo].[tb_REAGENT] ADD  DEFAULT ((0)) FOR [LastPrice]
+GO
+ALTER TABLE [dbo].[tb_REAGENT] ADD  DEFAULT ((0)) FOR [IsExpire]
+GO
+ALTER TABLE [dbo].[tb_REAGENT] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_REAGENT] ADD  DEFAULT ('') FOR [LastUpdateDtls]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [Qty]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [UnitPrice]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [BQty]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [UnitTotal]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [VatPc]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [VatAmt]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [ComPc]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [ComAmt]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_DETAIL] ADD  DEFAULT ((0)) FOR [Tp]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_LEDGER] ADD  DEFAULT ((0)) FOR [LessAmt]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_LEDGER] ADD  DEFAULT ((0)) FOR [RtnAmt]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_LEDGER] ADD  DEFAULT ((0)) FOR [PaymentAmt]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_MASTER] ADD  DEFAULT (getdate()) FOR [BillDate]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_MASTER] ADD  DEFAULT (getdate()) FOR [ReceiptDate]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_MASTER] ADD  DEFAULT ((0)) FOR [TotItem]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_MASTER] ADD  DEFAULT ((0)) FOR [TotAmt]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_MASTER] ADD  DEFAULT ((0)) FOR [NetAmt]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_MASTER] ADD  DEFAULT ((0)) FOR [TotVat]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_MASTER] ADD  DEFAULT ((0)) FOR [TotComision]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_MASTER] ADD  DEFAULT ((0)) FOR [TotLess]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_MASTER] ADD  DEFAULT ((0)) FOR [TotPaid]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_MASTER] ADD  DEFAULT (N'N/A') FOR [Remarks]
+GO
+ALTER TABLE [dbo].[tb_reagent_PURCHASE_MASTER] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_reagent_STOCK_LEDGER] ADD  DEFAULT ((0)) FOR [PurchasePrice]
+GO
+ALTER TABLE [dbo].[tb_reagent_STOCK_LEDGER] ADD  DEFAULT ((0)) FOR [SalesPrice]
+GO
+ALTER TABLE [dbo].[tb_reagent_STOCK_LEDGER] ADD  DEFAULT ('') FOR [LotNo]
+GO
+ALTER TABLE [dbo].[tb_reagent_STOCK_LEDGER] ADD  DEFAULT (getdate()) FOR [ExpireDate]
+GO
+ALTER TABLE [dbo].[tb_reagent_STOCK_LEDGER] ADD  DEFAULT ((0)) FOR [InQty]
+GO
+ALTER TABLE [dbo].[tb_reagent_STOCK_LEDGER] ADD  DEFAULT ((0)) FOR [OutQty]
+GO
+ALTER TABLE [dbo].[tb_reagent_STOCK_LEDGER] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_REAGENT_SUPPLIER] ADD  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_REPORT_DETAILS] ADD  CONSTRAINT [DF_tb_BILL_RESULTS_TestChartId]  DEFAULT ((0)) FOR [TestChartId]
+GO
+ALTER TABLE [dbo].[tb_REPORT_DETAILS] ADD  DEFAULT ((0)) FOR [IsPrint]
+GO
+ALTER TABLE [dbo].[tb_REPORT_DETAILS] ADD  DEFAULT ('') FOR [GroupName]
+GO
+ALTER TABLE [dbo].[tb_REPORT_DETAILS] ADD  DEFAULT ('') FOR [BillNo]
+GO
+ALTER TABLE [dbo].[tb_REPORT_MASTER] ADD  CONSTRAINT [DF_tb_REPORT_MASTER_EntryDate]  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_REPORT_MASTER] ADD  DEFAULT ('') FOR [RtfFile]
+GO
+ALTER TABLE [dbo].[tb_SubProject] ADD  CONSTRAINT [DF_tb_SubProject_HnrAmt]  DEFAULT ((0)) FOR [HnrAmt]
+GO
+ALTER TABLE [dbo].[tb_TESTCHART] ADD  CONSTRAINT [DF__Investiga__Charg__7F60ED59]  DEFAULT ((0)) FOR [Charge]
+GO
+ALTER TABLE [dbo].[tb_TESTCHART] ADD  CONSTRAINT [DF_tb_TestChart_DefaultHonouriam]  DEFAULT ((0)) FOR [MAXDISCOUNT]
+GO
+ALTER TABLE [dbo].[tb_TESTCHART] ADD  CONSTRAINT [DF__Investiga__Disco__00551192]  DEFAULT ((1)) FOR [IsDiscountItem]
+GO
+ALTER TABLE [dbo].[tb_TESTCHART] ADD  CONSTRAINT [DF_tb_TestChart_IsVaqItem]  DEFAULT ((0)) FOR [IsVaqItem]
+GO
+ALTER TABLE [dbo].[tb_TESTCHART] ADD  CONSTRAINT [DF_tb_TestChart_EntryDate]  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[tb_TESTCHART] ADD  DEFAULT ('--Select--') FOR [VaqName]
+GO
+ALTER TABLE [dbo].[tb_TESTCHART] ADD  DEFAULT ((0)) FOR [ReportFee]
+GO
+ALTER TABLE [dbo].[tb_TESTCHART] ADD  DEFAULT ((0)) FOR [IsDoctor]
+GO
+ALTER TABLE [dbo].[tb_TESTCHART] ADD  DEFAULT ((0)) FOR [IsIndoorItem]
+GO
+ALTER TABLE [dbo].[tb_TESTCHART] ADD  DEFAULT ((0)) FOR [ChangeCharge]
+GO
+ALTER TABLE [dbo].[tb_TESTCHART_PARAM] ADD  CONSTRAINT [DF__tb_TESTCH__TestC__318258D2]  DEFAULT ((0)) FOR [TestChartId]
+GO
+ALTER TABLE [dbo].[tb_TESTCHART_PARAM] ADD  CONSTRAINT [DF_tb_TESTCHART_PARAM_LowerVal]  DEFAULT ((0)) FOR [LowerVal]
+GO
+ALTER TABLE [dbo].[tb_TESTCHART_PARAM] ADD  CONSTRAINT [DF_tb_TESTCHART_PARAM_UpperVal]  DEFAULT ((0)) FOR [UpperVal]
+GO
+ALTER TABLE [dbo].[tb_TESTCHART_VAQ_FOR_BILL] ADD  CONSTRAINT [DFvaMgGRmcmur6FnmGe4HVofJBw14BbUTEe]  DEFAULT ((0)) FOR [Charge]
+GO
+ALTER TABLE [dbo].[tb_USER_PRIVILEGE] ADD  CONSTRAINT [DF_tb_USER_PRIVILEGE_EntryDate]  DEFAULT (getdate()) FOR [EntryDate]
+GO
+ALTER TABLE [dbo].[acc_VoucherDetail]  WITH CHECK ADD  CONSTRAINT [FK_acc_VoucherDetail_acc_Voucher_VoucherId] FOREIGN KEY([VoucherId])
+REFERENCES [dbo].[acc_Voucher] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[acc_VoucherDetail] CHECK CONSTRAINT [FK_acc_VoucherDetail_acc_Voucher_VoucherId]
+GO

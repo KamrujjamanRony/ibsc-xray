@@ -1,0 +1,14 @@
+.invalid {
+  border-color: red !important;
+  color: red !important;
+}
+
+.dark .invalid {
+  border-color: #ff4d4d !important;
+  color: #ff4d4d !important;
+}
+
+.highlighted {
+  background-color: #007bff !important;
+  color: white;
+}

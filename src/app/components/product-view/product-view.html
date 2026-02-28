@@ -1,0 +1,297 @@
+<!-- Loading State -->
+@if (isLoading()) {
+<div class="container mx-auto px-4 py-16">
+  <div class="text-center">
+    <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+    <p class="mt-4 text-gray-600">Loading product details...</p>
+  </div>
+</div>
+}
+
+<!-- Error State -->
+@if (hasError() && !isLoading()) {
+<div class="container mx-auto px-4 py-16">
+  <div class="max-w-md mx-auto text-center">
+    <div class="text-red-500 mb-4">
+      <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+        />
+      </svg>
+    </div>
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">Product Not Found</h2>
+    <p class="text-gray-600 mb-6">
+      The product you're looking for doesn't exist or has been removed.
+    </p>
+    <a
+      routerLink="/products"
+      class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
+    >
+      Browse All Products
+    </a>
+  </div>
+</div>
+}
+
+<!-- Product Content -->
+@if (product() && !isLoading()) {
+<div class="min-h-screen">
+  <!-- Breadcrumb -->
+  <div class="container mx-auto pt-5 px-4">
+    <nav
+      class="flex p-3 bg-neutral-secondary-medium border border-default-medium rounded-base"
+      aria-label="Breadcrumb"
+    >
+      <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+        <li class="inline-flex items-center">
+          <a
+            routerLink="/"
+            class="inline-flex items-center text-sm font-medium text-body hover:text-fg-brand cursor-pointer"
+          >
+            <svg
+              class="w-4 h-4 me-1.5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"
+              />
+            </svg>
+            Home
+          </a>
+        </li>
+        <li>
+          <div class="flex items-center space-x-1.5">
+            <svg
+              class="w-3.5 h-3.5 rtl:rotate-180 text-body"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m9 5 7 7-7 7"
+              />
+            </svg>
+            <a
+              routerLink="/products"
+              class="inline-flex items-center text-sm font-medium text-body hover:text-fg-brand cursor-pointer"
+              >Products</a
+            >
+          </div>
+        </li>
+        <li aria-current="page">
+          <div class="flex items-center space-x-1.5">
+            <svg
+              class="w-3.5 h-3.5 rtl:rotate-180 text-body"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m9 5 7 7-7 7"
+              />
+            </svg>
+            <span class="inline-flex items-center text-sm font-medium text-body-subtle">{{
+              product()!.title
+            }}</span>
+          </div>
+        </li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- Product Main Section -->
+  <div class="container mx-auto px-4 py-5">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Left Column: Images -->
+      <div class="space-y-4">
+        <app-product-gallery [images]="productImages()" [ImageApi]="ImageApi" />
+      </div>
+
+      <!-- Right Column: Product Info -->
+      <div class="space-y-6">
+        <!-- Title and Category -->
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ product()!.title }}</h1>
+          <div class="flex items-center gap-2 mb-2">
+            @if (product()!.itemDescription) {
+            <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">
+              {{ product()!.itemDescription }}
+            </span>
+            } @if (product()!.brand) {
+            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+              {{ product()!.brand }}
+            </span>
+            }
+          </div>
+        </div>
+
+        <!-- Specifications -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">Specifications</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            @if (product()!.model) {
+            <div>
+              <span class="text-sm text-gray-500">Model</span>
+              <p class="font-medium">{{ product()!.model }}</p>
+            </div>
+            } @if (product()!.brand) {
+            <div>
+              <span class="text-sm text-gray-500">Brand</span>
+              <p class="font-medium">{{ product()!.brand }}</p>
+            </div>
+            } @if (product()!.origin) {
+            <div>
+              <span class="text-sm text-gray-500">Origin</span>
+              <p class="font-medium">{{ product()!.origin }}</p>
+            </div>
+            } @if (product()!.itemDescription) {
+            <div>
+              <span class="text-sm text-gray-500">Category</span>
+              <p class="font-medium">{{ product()!.itemDescription }}</p>
+            </div>
+            }
+          </div>
+        </div>
+
+        <!-- Catalog Download -->
+        @if (hasCatalog()) {
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+          <div class="flex items-center gap-3 mb-2">
+            <svg
+              class="w-6 h-6 text-blue-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+            <h3 class="font-semibold text-gray-900">Product Catalog</h3>
+          </div>
+          <p class="text-sm text-gray-600 mb-3">
+            Download detailed specifications and technical information.
+          </p>
+          <button
+            (click)="downloadCatalog()"
+            class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer flex items-center justify-center gap-2"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+              />
+            </svg>
+            Download Catalog (PDF)
+          </button>
+        </div>
+        }
+
+        <!-- Action Buttons -->
+        <div class="bg-white rounded-xl shadow-sm p-6 space-y-4">
+          <!-- Share Buttons -->
+          <div class="pt-2">
+            <p class="text-sm text-gray-600 mb-2">Share this product:</p>
+            <div class="flex gap-2">
+              <button
+                (click)="shareProduct('facebook')"
+                class="flex items-center gap-2 px-4 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-900 transition-colors cursor-pointer"
+              >
+                <fa-icon [icon]="faFacebook" class="w-5 h-5"></fa-icon>
+                Share
+              </button>
+              <button
+                (click)="shareProduct('twitter')"
+                class="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors cursor-pointer"
+              >
+                <fa-icon [icon]="faTwitter" class="w-5 h-5"></fa-icon>
+                Tweet
+              </button>
+              <button
+                (click)="shareProduct('linkedin')"
+                class="flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors cursor-pointer"
+              >
+                <fa-icon [icon]="faLinkedin" class="w-5 h-5"></fa-icon>
+                Linkedin
+              </button>
+              <button
+                (click)="shareProduct('whatsapp')"
+                class="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors cursor-pointer"
+              >
+                <fa-icon [icon]="faWhatsapp" class="w-5 h-5"></fa-icon>
+                Massage
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Description -->
+    @if (product()!.description) {
+    <div class="bg-white rounded-xl shadow-sm p-6 my-2 lg:my-4">
+      <h2 class="text-xl font-semibold text-gray-900 mb-4">Product Description</h2>
+      <div class="prose max-w-none">
+        <p class="text-gray-700" style="white-space: pre-line">{{ product()!.description }}</p>
+      </div>
+    </div>
+    }
+    <!-- Special Features -->
+    @if (product()!.specialFeature) {
+    <div class="bg-white rounded-xl shadow-sm p-6 my-2 lg:my-4">
+      <h2 class="text-xl font-semibold text-gray-900 mb-4">Special Features</h2>
+      <div class="prose max-w-none">
+        <p class="text-gray-700" style="white-space: pre-line">{{ product()!.specialFeature }}</p>
+      </div>
+    </div>
+    }
+    <!-- Additional Information -->
+    @if (product()!.additionalInformation) {
+    <div class="bg-white rounded-xl shadow-sm p-6 my-2 lg:my-4">
+      <h2 class="text-xl font-semibold text-gray-900 mb-4">Additional Information</h2>
+      <div class="prose max-w-none">
+        <p class="text-gray-700" style="white-space: pre-line">{{ product()!.additionalInformation }}</p>
+      </div>
+    </div>
+    }
+  </div>
+
+  <!-- Related Products -->
+  @if (product()!.relatedProducts && product()!.relatedProducts.length > 0) {
+  <div class="container mx-auto px-4 py-8">
+    <app-related-products [productIds]="product()!.relatedProducts" />
+  </div>
+  }
+</div>
+}
