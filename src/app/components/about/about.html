@@ -69,7 +69,7 @@
             <h2 class="text-3xl font-bold text-gray-900">
               {{ about().title || 'Our Mission' }}
             </h2>
-            <p class="mt-4 text-lg text-gray-600">
+            <p class="mt-4 text-lg text-gray-600" style="white-space: pre-line">
               {{
                 about().description ||
                   'Our mission is to deliver exceptional value and innovation to our clients.'
@@ -84,7 +84,7 @@
             <h2 class="text-3xl font-bold text-gray-900">
               {{ about().title2 || 'Our Vision' }}
             </h2>
-            <p class="mt-4 text-lg text-gray-600">
+            <p class="mt-4 text-lg text-gray-600" style="white-space: pre-line">
               {{
                 about().description2 ||
                   'To be the leading provider of innovative solutions in our industry.'
@@ -99,7 +99,7 @@
             <h2 class="text-3xl font-bold text-gray-900">
               {{ about().title3 || 'Our Values' }}
             </h2>
-            <p class="mt-4 text-lg text-gray-600">
+            <p class="mt-4 text-lg text-gray-600" style="white-space: pre-line">
               {{
                 about().description3 ||
                   'Integrity, innovation, and customer-centricity are at our core.'
@@ -137,7 +137,7 @@
               {{ about().title4 || 'Our Team' }}
             </h3>
           </div>
-          <p class="text-gray-600">
+          <p class="text-gray-600" style="white-space: pre-line">
             {{
               about().description4 ||
                 'Meet our dedicated team of professionals committed to excellence.'
@@ -171,7 +171,7 @@
               {{ about().title5 || 'Our Approach' }}
             </h3>
           </div>
-          <p class="text-gray-600">
+          <p class="text-gray-600" style="white-space: pre-line">
             {{
               about().description5 ||
                 'We believe in collaborative, data-driven approaches to solve complex problems.'
@@ -180,22 +180,7 @@
         </div>
         }
       </div>
-
-      <!-- CTA Section -->
-      <div class="mt-16 text-center">
-        <div class="p-12 bg-linear-to-r from-blue-600 to-indigo-700 rounded-2xl">
-          <h2 class="text-3xl font-bold text-white">Ready to Work With Us?</h2>
-          <p class="mt-4 text-xl text-blue-100">Let's create something amazing together</p>
-          <div class="mt-8">
-            <button
-              type="button"
-              class="px-8 py-4 text-lg font-semibold text-blue-600 transition-all duration-300 bg-white rounded-full hover:bg-gray-100 hover:shadow-lg"
-            >
-              Get In Touch
-            </button>
-          </div>
-        </div>
-      </div>
+      
     </div>
   </div>
 </div>
