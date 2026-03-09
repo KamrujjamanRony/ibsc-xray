@@ -1,20 +1,20 @@
-import { Component, inject, signal, computed, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule, IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage } from '@angular/common';
-import { CarouselM } from '../../../utils/models';
-import { CarouselS } from '../../../services/carousel-s';
-import { environment } from '../../../../environments/environment';
+import { Component, computed, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { environment } from '../../../../environments/environment';
 import { faPencil, faXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FormField, form, required, validate, debounce } from '@angular/forms/signals';
 import { PermissionS } from '../../../services/auth/permission-s';
 import { ToastService } from '../../../utils/toast/toast.service';
 import { ConfirmService } from '../../../utils/confirm/confirm.service';
+import { SponsorM } from '../../../utils/models';
+import { SSponsor } from '../../../services/s-sponsor';
 
 @Component({
-  selector: 'app-carousel-list',
+  selector: 'app-extra-image-list',
   imports: [CommonModule, FontAwesomeModule, FormField, NgOptimizedImage],
-  templateUrl: './carousel-list.html',
-  styleUrl: './carousel-list.css',
+  templateUrl: './extra-image-list.html',
+  styleUrl: './extra-image-list.css',
   providers: [
     {
       provide: IMAGE_LOADER,
@@ -26,12 +26,12 @@ import { ConfirmService } from '../../../utils/confirm/confirm.service';
     },
   ],
 })
-export class CarouselList {
+export class ExtraImageList {
   faPencil = faPencil;
   faXmark = faXmark;
   faMagnifyingGlass = faMagnifyingGlass;
   /* ---------------- DI ---------------- */
-  private carouselService = inject(CarouselS);
+  private sponsorService = inject(SSponsor);
   private permissionService = inject(PermissionS);
   private toast = inject(ToastService);
   private confirm = inject(ConfirmService);
@@ -40,22 +40,22 @@ export class CarouselList {
   emptyImg = environment.emptyImg;
 
   /* ---------------- SIGNAL STATE ---------------- */
-  carousels = signal<CarouselM[]>([]);
+  sponsors = signal<SponsorM[]>([]);
   searchQuery = signal('');
 
   filteredList = computed(() => {
     const query = this.searchQuery().toLowerCase();
 
-    return this.carousels()
-      .filter(carousel =>
-        carousel.title?.toLowerCase().includes(query) ||
-        carousel.description?.toLowerCase().includes(query) ||
-        String(carousel.companyID ?? '').toLowerCase().includes(query)
+    return this.sponsors()
+      .filter(sponsor =>
+        sponsor.eTitle?.toLowerCase().includes(query) ||
+        sponsor.eDesc?.toLowerCase().includes(query) ||
+        String(sponsor.companyID ?? '').toLowerCase().includes(query)
       )
       .reverse();
   });
 
-  selected = signal<CarouselM | null>(null);
+  selected = signal<SponsorM | null>(null);
   selectedFile = signal<File | null>(null);
   previewUrl = signal<string | null>(null);
 
@@ -73,43 +73,43 @@ export class CarouselList {
 
   /* ---------------- FORM MODEL ---------------- */
   model = signal({
-    title: '',
-    description: '',
+    eTitle: '',
+    eDesc: '',
     companyID: environment.companyCode,
-    imageFile: '',
-    imageUrl: '',
+    eImageFile: '',
+    eImageUrl: '',
   });
 
   /* ---------------- SIGNAL FORM ---------------- */
   form = form(this.model, (schemaPath) => {
-    required(schemaPath.title, { message: 'Title is required' });
+    required(schemaPath.eTitle, { message: 'Title is required' });
 
     // Debounce form updates for better performance
-    debounce(schemaPath.title, 300);
+    debounce(schemaPath.eTitle, 300);
   });
 
   /* ---------------- LIFECYCLE ---------------- */
   ngOnInit(): void {
-    this.loadCarousels();
+    this.loadSponsors();
     this.loadPermissions();
   }
 
   /* ---------------- LOADERS ---------------- */
   loadPermissions() {
-    this.isView.set(this.permissionService.hasPermission('Carousel', 'view'));
-    this.isInsert.set(this.permissionService.hasPermission('Carousel', 'create'));
-    this.isEdit.set(this.permissionService.hasPermission('Carousel', 'edit'));
-    this.isDelete.set(this.permissionService.hasPermission('Carousel', 'delete'));
+    this.isView.set(this.permissionService.hasPermission('Sponsor', 'view'));
+    this.isInsert.set(this.permissionService.hasPermission('Sponsor', 'create'));
+    this.isEdit.set(this.permissionService.hasPermission('Sponsor', 'edit'));
+    this.isDelete.set(this.permissionService.hasPermission('Sponsor', 'delete'));
   }
 
-  loadCarousels(title = "", description = "", companyID = environment.companyCode) {
+  loadSponsors(title = "", description = "", companyID = environment.companyCode) {
     this.isLoading.set(true);
     this.hasError.set(false);
     const searchParams = { companyID, title, description }
 
-    this.carouselService.search(searchParams).subscribe({
+    this.sponsorService.search(searchParams).subscribe({
       next: (data) => {
-        this.carousels.set(data);
+        this.sponsors.set(data);
         this.isLoading.set(false);
       },
       error: () => {
@@ -140,7 +140,7 @@ export class CarouselList {
 
   clearFileInput() {
     setTimeout(() => {
-      const input = document.getElementById('imageUrl') as HTMLInputElement;
+      const input = document.getElementById('eImageUrl') as HTMLInputElement;
       if (input) {
         input.value = '';
       }
@@ -163,22 +163,22 @@ export class CarouselList {
     const formData = new FormData();
 
     formData.append('CompanyID', String(formValue.companyID));
-    formData.append('Title', formValue.title);
-    formData.append('Description', formValue.description ?? '');
-    formData.append('ImageUrl', formValue.imageUrl ?? '');
+    formData.append('ETitle', formValue.eTitle);
+    formData.append('EDesc', formValue.eDesc ?? '');
+    formData.append('EImageUrl', formValue.eImageUrl ?? '');
     // ✅ Append file correctly
     if (this.selectedFile()) {
-      formData.append('ImageFile', this.selectedFile() as File);
+      formData.append('EImageFile', this.selectedFile() as File);
     }
 
 
     const request$ = this.selected()
-      ? this.carouselService.update(this.selected()!.id, formData)
-      : this.carouselService.add(formData);
+      ? this.sponsorService.update(this.selected()!.id, formData)
+      : this.sponsorService.add(formData);
 
     request$.subscribe({
       next: () => {
-        this.loadCarousels();
+        this.loadSponsors();
         this.onToggleList();
         this.toast.success('Saved successfully!', 'bottom-right', 5000);
       },
@@ -192,22 +192,22 @@ export class CarouselList {
 
 
   /* ---------------- UPDATE ---------------- */
-  onUpdate(carousel: CarouselM) {
-    this.selected.set(carousel);
+  onUpdate(sponsor: SponsorM) {
+    this.selected.set(sponsor);
 
     this.model.update(current => ({
       ...current,
-      title: carousel?.title,
-      description: carousel?.description ?? '',
-      companyID: carousel?.companyID,
-      imageUrl: carousel?.imageUrl,
+      eTitle: sponsor?.eTitle,
+      eDesc: sponsor?.eDesc ?? '',
+      companyID: sponsor?.companyID,
+      eImageUrl: sponsor?.eImageUrl,
     }));
 
     this.form().reset();
     // Set main image preview
-    if (carousel.imageUrl) {
+    if (sponsor.eImageUrl) {
       this.previewUrl.set(
-        this.imgURL ? `${this.imgURL}${carousel.imageUrl}` : carousel.imageUrl
+        this.imgURL ? `${this.imgURL}${sponsor.eImageUrl}` : sponsor.eImageUrl
       );
     } else {
       this.previewUrl.set(null);
@@ -227,22 +227,22 @@ export class CarouselList {
   /* ---------------- DELETE ---------------- */
   async onDelete(id: any) {
     const ok = await this.confirm.confirm({
-      message: 'Are you sure you want to delete this Carousel?',
+      message: 'Are you sure you want to delete this sponsor?',
       confirmText: "Yes, I'm sure",
       cancelText: 'No, cancel',
       variant: 'danger',
     });
 
     if (ok) {
-      // Delete Carousel
-      this.carouselService.delete(id).subscribe({
+      // Delete sponsor
+      this.sponsorService.delete(id).subscribe({
         next: () => {
-          this.carousels.update(list => list.filter(c => c.id !== id));
-          this.toast.success('Carousel deleted successfully!', 'bottom-right', 5000);
+          this.sponsors.update(list => list.filter(c => c.id !== id));
+          this.toast.success('sponsor deleted successfully!', 'bottom-right', 5000);
         },
         error: (error) => {
-          this.toast.danger('Carousel deleted unsuccessful!', 'bottom-left', 3000);
-          console.error('Error deleting Carousel:', error);
+          this.toast.danger('sponsor deleted unsuccessful!', 'bottom-left', 3000);
+          console.error('Error deleting sponsor:', error);
         }
       });
     }
@@ -251,11 +251,11 @@ export class CarouselList {
   /* ---------------- RESET ---------------- */
   formReset() {
     this.model.set({
-      title: '',
-      description: '',
+      eTitle: '',
+      eDesc: '',
       companyID: environment.companyCode,
-      imageFile: '',
-      imageUrl: '',
+      eImageFile: '',
+      eImageUrl: '',
     });
 
     this.selected.set(null);
@@ -280,4 +280,5 @@ export class CarouselList {
     this.showList.update(s => !s);
     this.formReset();
   }
+
 }

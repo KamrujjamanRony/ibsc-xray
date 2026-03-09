@@ -43,6 +43,14 @@ export interface CarouselM {
     imageUrl: any;
 }
 
+export interface SponsorM {
+    id: string;
+    companyID: number;
+    eTitle: string;
+    eDesc: string;
+    eImageUrl: any;
+}
+
 export interface ProductM {
     id?: any;
     companyID: number;

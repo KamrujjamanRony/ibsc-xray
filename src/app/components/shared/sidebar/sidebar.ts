@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faImage, faXRay, faUser, faRectangleList, faAddressCard, faAddressBook, faRightFromBracket, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import { faImage, faXRay, faUser, faRectangleList, faAddressCard, faAddressBook, faRightFromBracket, faCaretDown, faCaretUp, faHandshake, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { AuthS } from '../../../services/auth/auth-s';
 
 @Component({
@@ -20,6 +20,8 @@ export class Sidebar {
   faAddressCard = faAddressCard;
   faAddressBook = faAddressBook;
   faRightFromBracket = faRightFromBracket;
+  faHandshake = faHandshake;
+  faLayerGroup = faLayerGroup;
   auth = inject(AuthS);
 
 
@@ -29,10 +31,13 @@ export class Sidebar {
       id: 0, label: 'Carousel', icon: faImage, route: '/admin/carousel'
     },
     {
+      id: 7, label: 'Sponsor', icon: faHandshake, route: '/admin/sponsor'
+    },
+    {
       id: 1, label: 'Product', icon: faXRay, route: '/admin/product'
     },
     {
-      id: 2, label: 'Item', icon: faXRay, route: '/admin/item'
+      id: 2, label: 'Item', icon: faLayerGroup, route: '/admin/item'
     },
     {
       id: 3, label: 'User', icon: faUser, route: '/admin/user'

@@ -84,6 +84,12 @@ export const routes: Routes = [
         title: `Carousel Management | ${companyName}`,
       },
       {
+        path: 'sponsor',
+        loadComponent: () =>
+          import('./components/admin/extra-image-list/extra-image-list').then(m => m.ExtraImageList),
+        title: `Sponsor Management | ${companyName}`,
+      },
+      {
         path: 'item',
         loadComponent: () =>
           import('./components/admin/item-list/item-list').then(m => m.ItemList),
