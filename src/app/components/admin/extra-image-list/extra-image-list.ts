@@ -102,10 +102,10 @@ export class ExtraImageList {
     this.isDelete.set(this.permissionService.hasPermission('Sponsor', 'delete'));
   }
 
-  loadSponsors(title = "", description = "", companyID = environment.companyCode) {
+  loadSponsors(eTitle = "", eDesc = "", companyID = environment.companyCode) {
     this.isLoading.set(true);
     this.hasError.set(false);
-    const searchParams = { companyID, title, description }
+    const searchParams = { companyID, eTitle, eDesc }
 
     this.sponsorService.search(searchParams).subscribe({
       next: (data) => {
